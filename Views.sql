@@ -34,7 +34,6 @@ JOIN
 JOIN
     Storeroom st ON p.StoreroomID = st.StoreroomID;
 
-
 CREATE VIEW ProductStockSummary AS
 SELECT 
     p.ProductCode,
@@ -47,7 +46,6 @@ JOIN
     Product_Color pc ON p.ProductCode = pc.ProductID
 GROUP BY 
     p.ProductCode, p.ProductName;
-
 
 CREATE VIEW SalesOverview AS
 SELECT 
