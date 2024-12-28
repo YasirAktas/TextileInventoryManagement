@@ -29,6 +29,14 @@
 /Users/ezhermemeti/Desktop/DATABASE/TextileInventoryManagement/MyRazorApp/obj/Debug/net7.0/MyRazorApp.pdb
 /Users/ezhermemeti/Desktop/DATABASE/TextileInventoryManagement/MyRazorApp/obj/Debug/net7.0/MyRazorApp.genruntimeconfig.cache
 /Users/ezhermemeti/Desktop/DATABASE/TextileInventoryManagement/MyRazorApp/obj/Debug/net7.0/ref/MyRazorApp.dll
+<<<<<<< Updated upstream
+=======
+C:\Users\yasir\vscodeide\TextileInventoryManagement\MyRazorApp\bin\Debug\net7.0\appsettings.Development.json
+C:\Users\yasir\vscodeide\TextileInventoryManagement\MyRazorApp\bin\Debug\net7.0\appsettings.json
+C:\Users\yasir\vscodeide\TextileInventoryManagement\MyRazorApp\bin\Debug\net7.0\MyRazorApp.staticwebassets.runtime.json
+C:\Users\yasir\vscodeide\TextileInventoryManagement\MyRazorApp\bin\Debug\net7.0\MyRazorApp.staticwebassets.endpoints.json
+C:\Users\yasir\vscodeide\TextileInventoryManagement\MyRazorApp\bin\Debug\net7.0\MyRazorApp.exe
+>>>>>>> Stashed changes
 C:\Users\yasir\vscodeide\TextileInventoryManagement\MyRazorApp\obj\Debug\net7.0\MyRazorApp.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\yasir\vscodeide\TextileInventoryManagement\MyRazorApp\obj\Debug\net7.0\MyRazorApp.AssemblyInfoInputs.cache
 C:\Users\yasir\vscodeide\TextileInventoryManagement\MyRazorApp\obj\Debug\net7.0\MyRazorApp.AssemblyInfo.cs
@@ -40,11 +48,6 @@ C:\Users\yasir\vscodeide\TextileInventoryManagement\MyRazorApp\obj\Debug\net7.0\
 C:\Users\yasir\vscodeide\TextileInventoryManagement\MyRazorApp\obj\Debug\net7.0\MyRazorApp.dll
 C:\Users\yasir\vscodeide\TextileInventoryManagement\MyRazorApp\obj\Debug\net7.0\refint\MyRazorApp.dll
 C:\Users\yasir\vscodeide\TextileInventoryManagement\MyRazorApp\obj\Debug\net7.0\MyRazorApp.pdb
-C:\Users\yasir\vscodeide\TextileInventoryManagement\MyRazorApp\bin\Debug\net7.0\appsettings.Development.json
-C:\Users\yasir\vscodeide\TextileInventoryManagement\MyRazorApp\bin\Debug\net7.0\appsettings.json
-C:\Users\yasir\vscodeide\TextileInventoryManagement\MyRazorApp\bin\Debug\net7.0\MyRazorApp.staticwebassets.runtime.json
-C:\Users\yasir\vscodeide\TextileInventoryManagement\MyRazorApp\bin\Debug\net7.0\MyRazorApp.staticwebassets.endpoints.json
-C:\Users\yasir\vscodeide\TextileInventoryManagement\MyRazorApp\bin\Debug\net7.0\MyRazorApp.exe
 C:\Users\yasir\vscodeide\TextileInventoryManagement\MyRazorApp\obj\Debug\net7.0\scopedcss\Pages\Shared\_Layout.cshtml.rz.scp.css
 C:\Users\yasir\vscodeide\TextileInventoryManagement\MyRazorApp\obj\Debug\net7.0\scopedcss\bundle\MyRazorApp.styles.css
 C:\Users\yasir\vscodeide\TextileInventoryManagement\MyRazorApp\obj\Debug\net7.0\scopedcss\projectbundle\MyRazorApp.bundle.scp.css
