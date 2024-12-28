@@ -75,25 +75,26 @@
             </div>
             <form method="post">
                 <div class="modal-body">
+                    <input type="hidden" name="action" value="add" />
                     <div class="form-group">
                         <label for="UpdateName"><strong>Product ID</strong></label>
                         <input type="Text" class="form-control" id="UpdateProductId" name="ProductId" placeholder="Enter updated product ID" required />
                     </div>
                     <div class="form-group">
                         <label for="Name"><strong>Product Name</strong></label>
-                        <input type="text" class="form-control" id="Name" name="Name" placeholder="Enter product name" required />
+                        <input type="text" class="form-control" id="Name" name="Product.Name" placeholder="Enter product name" required />
                     </div>
                     <div class="form-group">
                         <label for="StockQuantity"><strong>Stock Quantity</strong></label>
-                        <input type="number" class="form-control" id="StockQuantity" name="StockQuantity" placeholder="Enter stock quantity" required />
+                        <input type="number" class="form-control" id="StockQuantity" name="Product.StockQuantity" placeholder="Enter stock quantity" required />
                     </div>
                     <div class="form-group">
                         <label for="Storeroom"><strong>Storeroom</strong></label>
-                        <input type="number" class="form-control" id="Storeroom" name="Storeroom" placeholder="Enter Storeroom ID" required />
+                        <input type="number" class="form-control" id="Storeroom" name="Product.Storeroom" placeholder="Enter Storeroom ID" required />
                     </div>
                     <div class="form-group">
                         <label for="UnitPrice"><strong>Unit Price</strong></label>
-                        <input type="number" class="form-control" id="UnitPrice" name="UnitPrice" placeholder="Enter unit price" required />
+                        <input type="number" class="form-control" id="UnitPrice" name="Product.UnitPrice" placeholder="Enter unit price" required />
                     </div>
 
                 </div>

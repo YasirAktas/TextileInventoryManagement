@@ -37,6 +37,11 @@ namespace MyRazorApp.Pages
                     UpdateProduct(Product);
                 }
             }
+            if (Request.Form["action"] == "add")
+            {
+                AddProduct(Product);
+            }
+
 
             return RedirectToPage();
         }
@@ -53,7 +58,7 @@ namespace MyRazorApp.Pages
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                string query = "SELECT ProductCode, ProductName, StockLevel, UnitPrice, StoreroomID FROM Products";
+                string query = "SELECT ProductCode, ProductName, StockLevel, UnitPrice, StoreroomID FROM Product";
                 SqlCommand cmd = new SqlCommand(query, con);
 
                 con.Open();
