@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
 
 namespace MyRazorApp.Pages
 {
@@ -23,12 +22,12 @@ namespace MyRazorApp.Pages
         {
             if (Request.Form["action"] == "delete")
             {
-                var productId = int.Parse(Request.Form["ProductId"]);
+                var productId = int.Parse(Request.Form["ProductCode"]);
                 DeleteProduct(productId);
             }
             else
             {
-                if (Product.Id == 0)
+                if (Product.ProductCode == 0)
                 {
                     AddProduct(Product);
                 }
@@ -63,11 +62,11 @@ namespace MyRazorApp.Pages
                     {
                         products.Add(new Product
                         {
-                            Id = reader.GetInt32(0),
-                            Name = reader.GetString(1),
-                            StockQuantity = reader.GetInt32(2),
+                            ProductCode = reader.GetInt32(0),
+                            ProductName = reader.GetString(1),
+                            StockLevel = reader.GetInt32(2),
                             UnitPrice = reader.GetDecimal(3),
-                            Storeroom = reader.GetInt32(4)
+                            StoreroomID = reader.GetInt32(4)
                         });
                     }
                 }
@@ -80,13 +79,13 @@ namespace MyRazorApp.Pages
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                string query = "INSERT INTO Products (Name, StockQuantity, UnitPrice, Storeroom) VALUES (@Name, @StockQuantity, @UnitPrice, @Storeroom)";
+                string query = "INSERT INTO Products (ProductName, StockLevel, UnitPrice, StoreroomID) VALUES (@ProductName, @StockLevel, @UnitPrice, @StoreroomID)";
                 SqlCommand cmd = new SqlCommand(query, con);
 
-                cmd.Parameters.AddWithValue("@Name", product.Name);
-                cmd.Parameters.AddWithValue("@StockQuantity", product.StockQuantity);
+                cmd.Parameters.AddWithValue("@ProductName", product.ProductName);
+                cmd.Parameters.AddWithValue("@StockLevel", product.StockLevel);
                 cmd.Parameters.AddWithValue("@UnitPrice", product.UnitPrice);
-                cmd.Parameters.AddWithValue("@Storeroom", product.Storeroom);
+                cmd.Parameters.AddWithValue("@StoreroomID", product.StoreroomID);
 
                 con.Open();
                 cmd.ExecuteNonQuery();
@@ -97,28 +96,28 @@ namespace MyRazorApp.Pages
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                string query = "UPDATE Products SET Name = @Name, StockQuantity = @StockQuantity, UnitPrice = @UnitPrice, Storeroom = @Storeroom WHERE Id = @Id";
+                string query = "UPDATE Products SET ProductName = @ProductName, StockLevel = @StockLevel, UnitPrice = @UnitPrice, StoreroomID = @StoreroomID WHERE ProductCode = @ProductCode";
                 SqlCommand cmd = new SqlCommand(query, con);
 
-                cmd.Parameters.AddWithValue("@Id", product.Id);
-                cmd.Parameters.AddWithValue("@Name", product.Name);
-                cmd.Parameters.AddWithValue("@StockQuantity", product.StockQuantity);
+                cmd.Parameters.AddWithValue("@ProductCode", product.ProductCode);
+                cmd.Parameters.AddWithValue("@ProductName", product.ProductName);
+                cmd.Parameters.AddWithValue("@StockLevel", product.StockLevel);
                 cmd.Parameters.AddWithValue("@UnitPrice", product.UnitPrice);
-                cmd.Parameters.AddWithValue("@Storeroom", product.Storeroom);
+                cmd.Parameters.AddWithValue("@StoreroomID", product.StoreroomID);
 
                 con.Open();
                 cmd.ExecuteNonQuery();
             }
         }
 
-        private void DeleteProduct(int id)
+        private void DeleteProduct(int productCode)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                string query = "DELETE FROM Products WHERE Id = @Id";
+                string query = "DELETE FROM Products WHERE ProductCode = @ProductCode";
                 SqlCommand cmd = new SqlCommand(query, con);
 
-                cmd.Parameters.AddWithValue("@Id", id);
+                cmd.Parameters.AddWithValue("@ProductCode", productCode);
 
                 con.Open();
                 cmd.ExecuteNonQuery();
@@ -126,5 +125,5 @@ namespace MyRazorApp.Pages
         }
     }
 
-    
+   
 }
