@@ -1,0 +1,119 @@
+@page
+@model MyRazorApp.Pages.ProductModel
+@{
+    ViewData["Title"] = "Product";
+}
+
+<h2>Product Management</h2>
+
+<!-- Button to Open Add Product Form -->
+<div>
+    <button class="btn btn-primary" data-toggle="modal" data-target="#addProductModal">Add New Product</button>
+</div>
+
+<h3>Product List</h3>
+
+<!-- Product Table -->
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Stock Quantity</th>
+            <th>Unit Price</th>
+            <th>Total Price</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model.Products)
+        {
+            <tr>
+                <td>@product.Name</td>
+                <td>@product.StockQuantity</td>
+                <td>@product.UnitPrice</td>
+                <td>@(product.UnitPrice * product.StockQuantity)</td>
+                <td>
+                    <!-- Button to Open Update Product Form -->
+                    <button class="btn btn-info" data-toggle="modal" data-target="#updateProductModal"
+                        data-id="@product.Id" data-name="@product.Name" data-quantity="@product.StockQuantity" data-price="@product.UnitPrice">Edit</button>
+
+                    <!-- Delete Product Button -->
+                    <form method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger" name="action" value="delete" formaction="@Url.Page("Product", new { action = "Delete", id = product.Id })"
+                            onclick="return confirm('Are you sure you want to delete this product?');">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Modal for Add Product -->
+<div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="addProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addProductModalLabel">Add New Product</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="Name">Product Name</label>
+                        <input type="text" class="form-control" id="Name" name="Name" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="StockQuantity">Stock Quantity</label>
+                        <input type="number" class="form-control" id="StockQuantity" name="StockQuantity" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="UnitPrice">Unit Price</label>
+                        <input type="number" class="form-control" id="UnitPrice" name="UnitPrice" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for Update Product -->
+<div class="modal fade" id="updateProductModal" tabindex="-1" role="dialog" aria-labelledby="updateProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateProductModalLabel">Update Product</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post">
+                <div class="modal-body">
+                    <input type="hidden" id="ProductId" name="ProductId" />
+                    <div class="form-group">
+                        <label for="UpdateName">Product Name</label>
+                        <input type="text" class="form-control" id="UpdateName" name="Name" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="UpdateStockQuantity">Stock Quantity</label>
+                        <input type="number" class="form-control" id="UpdateStockQuantity" name="StockQuantity" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="UpdateUnitPrice">Unit Price</label>
+                        <input type="number" class="form-control" id="UpdateUnitPrice" name="UnitPrice" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Update Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

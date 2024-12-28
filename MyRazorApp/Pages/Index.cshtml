@@ -1,0 +1,57 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="container">
+    <h1 class="text-center">Textile Inventory Management System</h1>
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card text-white bg-secondary">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Total Products</h5>
+                    <ul class="list-group">
+                        @foreach (var product in Model.TotalProducts)
+                        {
+                            <li class="list-group-item">
+                                @product.Name - @product.StockQuantity
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-secondary">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Low Stock Products</h5>
+                    <ul class="list-group">
+                        @foreach (var product in Model.LowStockProducts)
+                        {
+                            <li class="list-group-item">
+                                @product.Name - @product.StockQuantity
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-secondary">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Total Sales Revenue</h5>
+                    <p class="card-text display-4">@Model.TotalRevenue</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-5 text-center">
+        <a asp-page="/Products" class="btn btn-primary btn-lg">Manage Products</a>
+        <a asp-page="/Inventory" class="btn btn-primary btn-lg">View Inventory</a>
+        <a asp-page="/Sales" class="btn btn-primary btn-lg">View Sales</a>
+        <a asp-page="/Reports" class="btn btn-primary btn-lg">Generate Reports</a>
+        <a asp-page="/Storerooms" class="btn btn-primary btn-lg">Manage Storerooms</a>
+    </div>
+</div>
