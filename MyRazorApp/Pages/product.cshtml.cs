@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
-using MyRazorApp.Pages;  // Make sure this is added to the file
 
 namespace MyRazorApp.Pages
 {
@@ -12,29 +12,22 @@ namespace MyRazorApp.Pages
         [BindProperty]
         public Product Product { get; set; }
 
+        private readonly string connectionString = "Data Source=Yasir;Database=TIMS;Integrated Security=True;";
+
         public void OnGet()
         {
-            // Populate Products list (this can be replaced by data from your database)
-           Products = new List<Product>
-{
-    new Product { Id = 1, Name = "Shirt", StockQuantity = 100, UnitPrice = 20, Storeroom = 1 },
-    new Product { Id = 2, Name = "Pants", StockQuantity = 50, UnitPrice = 40, Storeroom = 2}
-};
-
-
+            Products = GetProductsFromDatabase();
         }
 
         public IActionResult OnPost()
         {
             if (Request.Form["action"] == "delete")
             {
-                // Handle delete logic
                 var productId = int.Parse(Request.Form["ProductId"]);
                 DeleteProduct(productId);
             }
             else
             {
-                // Handle add or update logic
                 if (Product.Id == 0)
                 {
                     AddProduct(Product);
@@ -50,25 +43,88 @@ namespace MyRazorApp.Pages
 
         public IActionResult OnPostDelete(int id)
         {
-            // Delete the product by ID
             DeleteProduct(id);
             return RedirectToPage();
         }
 
+        private List<Product> GetProductsFromDatabase()
+        {
+            var products = new List<Product>();
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = "SELECT ProductCode, ProductName, StockLevel, UnitPrice, StoreroomID FROM Products";
+                SqlCommand cmd = new SqlCommand(query, con);
+
+                con.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        products.Add(new Product
+                        {
+                            Id = reader.GetInt32(0),
+                            Name = reader.GetString(1),
+                            StockQuantity = reader.GetInt32(2),
+                            UnitPrice = reader.GetDecimal(3),
+                            Storeroom = reader.GetInt32(4)
+                        });
+                    }
+                }
+            }
+
+            return products;
+        }
+
         private void AddProduct(Product product)
         {
-            // Add product logic (e.g., save to database)
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = "INSERT INTO Products (Name, StockQuantity, UnitPrice, Storeroom) VALUES (@Name, @StockQuantity, @UnitPrice, @Storeroom)";
+                SqlCommand cmd = new SqlCommand(query, con);
+
+                cmd.Parameters.AddWithValue("@Name", product.Name);
+                cmd.Parameters.AddWithValue("@StockQuantity", product.StockQuantity);
+                cmd.Parameters.AddWithValue("@UnitPrice", product.UnitPrice);
+                cmd.Parameters.AddWithValue("@Storeroom", product.Storeroom);
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+            }
         }
 
         private void UpdateProduct(Product product)
         {
-            // Update product logic (e.g., update the database)
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = "UPDATE Products SET Name = @Name, StockQuantity = @StockQuantity, UnitPrice = @UnitPrice, Storeroom = @Storeroom WHERE Id = @Id";
+                SqlCommand cmd = new SqlCommand(query, con);
+
+                cmd.Parameters.AddWithValue("@Id", product.Id);
+                cmd.Parameters.AddWithValue("@Name", product.Name);
+                cmd.Parameters.AddWithValue("@StockQuantity", product.StockQuantity);
+                cmd.Parameters.AddWithValue("@UnitPrice", product.UnitPrice);
+                cmd.Parameters.AddWithValue("@Storeroom", product.Storeroom);
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+            }
         }
 
         private void DeleteProduct(int id)
         {
-            // Delete product logic (e.g., remove from database)
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = "DELETE FROM Products WHERE Id = @Id";
+                SqlCommand cmd = new SqlCommand(query, con);
+
+                cmd.Parameters.AddWithValue("@Id", id);
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+            }
         }
     }
 
+    
 }
