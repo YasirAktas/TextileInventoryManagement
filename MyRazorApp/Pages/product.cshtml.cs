@@ -37,10 +37,7 @@ namespace MyRazorApp.Pages
                     UpdateProduct(Product);
                 }
             }
-            if (Request.Form["action"] == "add")
-            {
-                AddProduct(Product);
-            }
+            
 
 
             return RedirectToPage();
@@ -81,54 +78,84 @@ namespace MyRazorApp.Pages
             return products;
         }
 
-        private void AddProduct(Product product)
+       private void AddProduct(Product product)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                string query = "INSERT INTO Products (Name, StockQuantity, UnitPrice, Storeroom) VALUES (@Name, @StockQuantity, @UnitPrice, @Storeroom)";
-                SqlCommand cmd = new SqlCommand(query, con);
+                // Define the stored procedure name
+                string procedureName = "AddProduct";
 
-                cmd.Parameters.AddWithValue("@Name", product.Name);
-                cmd.Parameters.AddWithValue("@StockQuantity", product.StockQuantity);
-                cmd.Parameters.AddWithValue("@UnitPrice", product.UnitPrice);
-                cmd.Parameters.AddWithValue("@Storeroom", product.Storeroom);
+                // Create the SQL command
+                using (SqlCommand cmd = new SqlCommand(procedureName, con))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-                con.Open();
-                cmd.ExecuteNonQuery();
+                    // Add parameters to the command
+                    cmd.Parameters.AddWithValue("@ProductName", product.Name);
+                    cmd.Parameters.AddWithValue("@AgeGroup", product.AgeGroup);
+                    cmd.Parameters.AddWithValue("@UnitPrice", product.UnitPrice);
+                    cmd.Parameters.AddWithValue("@StockLevel", product.StockQuantity);
+                    cmd.Parameters.AddWithValue("@Discount", product.Discount);
+                    cmd.Parameters.AddWithValue("@StoreroomID", product.Storeroom);
+
+                    // Open the connection and execute the command
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
             }
         }
+
 
         private void UpdateProduct(Product product)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                string query = "UPDATE Products SET Name = @Name, StockQuantity = @StockQuantity, UnitPrice = @UnitPrice, Storeroom = @Storeroom WHERE Id = @Id";
-                SqlCommand cmd = new SqlCommand(query, con);
+                // Define the stored procedure name
+                string procedureName = "UpdateProduct";
 
-                cmd.Parameters.AddWithValue("@Id", product.Id);
-                cmd.Parameters.AddWithValue("@Name", product.Name);
-                cmd.Parameters.AddWithValue("@StockQuantity", product.StockQuantity);
-                cmd.Parameters.AddWithValue("@UnitPrice", product.UnitPrice);
-                cmd.Parameters.AddWithValue("@Storeroom", product.Storeroom);
+                // Create the SQL command
+                using (SqlCommand cmd = new SqlCommand(procedureName, con))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-                con.Open();
-                cmd.ExecuteNonQuery();
+                    // Add parameters to the command
+                    cmd.Parameters.AddWithValue("@ProductCode", product.Id);
+                    cmd.Parameters.AddWithValue("@ProductName", product.Name);
+                    cmd.Parameters.AddWithValue("@AgeGroup", product.AgeGroup);
+                    cmd.Parameters.AddWithValue("@UnitPrice", product.UnitPrice);
+                    cmd.Parameters.AddWithValue("@StockLevel", product.StockQuantity);
+                    cmd.Parameters.AddWithValue("@Discount", product.Discount);
+                    cmd.Parameters.AddWithValue("@StoreroomID", product.Storeroom);
+
+                    // Open the connection and execute the command
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
             }
         }
 
-        private void DeleteProduct(int id)
+        private void DeleteProduct(int productCode)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                string query = "DELETE FROM Products WHERE Id = @Id";
-                SqlCommand cmd = new SqlCommand(query, con);
+                // Define the stored procedure name
+                string procedureName = "DeleteProduct";
 
-                cmd.Parameters.AddWithValue("@Id", id);
+                // Create the SQL command
+                using (SqlCommand cmd = new SqlCommand(procedureName, con))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-                con.Open();
-                cmd.ExecuteNonQuery();
+                    // Add parameter to specify which product to delete
+                    cmd.Parameters.RemoveAt("@ProductCode");
+
+                    // Open the connection and execute the command
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
             }
         }
+
     }
 
     

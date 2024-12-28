@@ -77,12 +77,20 @@
                 <div class="modal-body">
                     <input type="hidden" name="action" value="add" />
                     <div class="form-group">
-                        <label for="UpdateName"><strong>Product ID</strong></label>
-                        <input type="Text" class="form-control" id="UpdateProductId" name="ProductId" placeholder="Enter updated product ID" required />
-                    </div>
-                    <div class="form-group">
                         <label for="Name"><strong>Product Name</strong></label>
                         <input type="text" class="form-control" id="Name" name="Product.Name" placeholder="Enter product name" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="Age Group"><strong>Age Group</strong></label>
+                        <input type="text" class="form-control" id="AgeGroup" name="Product.AgeGroup" placeholder="Enter Age Group" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="UnitPrice"><strong>Unit Price</strong></label>
+                        <input type="number" class="form-control" id="UnitPrice" name="Product.UnitPrice" placeholder="Enter unit price" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="Discount"><strong>Discount</strong></label>
+                        <input type="number" class="form-control" id="Discount" name="Product.Discount" placeholder="Enter Discount" required />
                     </div>
                     <div class="form-group">
                         <label for="StockQuantity"><strong>Stock Quantity</strong></label>
@@ -92,11 +100,7 @@
                         <label for="Storeroom"><strong>Storeroom</strong></label>
                         <input type="number" class="form-control" id="Storeroom" name="Product.Storeroom" placeholder="Enter Storeroom ID" required />
                     </div>
-                    <div class="form-group">
-                        <label for="UnitPrice"><strong>Unit Price</strong></label>
-                        <input type="number" class="form-control" id="UnitPrice" name="Product.UnitPrice" placeholder="Enter unit price" required />
-                    </div>
-
+                    
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -120,24 +124,28 @@
             <form method="post">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="UpdateName"><strong>Product ID</strong></label>
-                        <input type="Text" class="form-control" id="UpdateProductId" name="ProductId" placeholder="Enter updated product ID" required />
+                        <label for="Name"><strong>Product Name</strong></label>
+                        <input type="text" class="form-control" id="Name" name="Product.Name" placeholder="Enter product name" required />
                     </div>
                     <div class="form-group">
-                        <label for="UpdateName"><strong>Product Name</strong></label>
-                        <input type="text" class="form-control" id="UpdateName" name="Name" placeholder="Enter updated product name" required />
+                        <label for="Age Group"><strong>Age Group</strong></label>
+                        <input type="text" class="form-control" id="AgeGroup" name="Product.AgeGroup" placeholder="Enter Age Group" required />
                     </div>
                     <div class="form-group">
-                        <label for="UpdateStockQuantity"><strong>Stock Quantity</strong></label>
-                        <input type="number" class="form-control" id="UpdateStockQuantity" name="StockQuantity" placeholder="Enter updated stock quantity" required />
+                        <label for="UnitPrice"><strong>Unit Price</strong></label>
+                        <input type="number" class="form-control" id="UnitPrice" name="Product.UnitPrice" placeholder="Enter unit price" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="Discount"><strong>Discount</strong></label>
+                        <input type="number" class="form-control" id="Discount" name="Product.Discount" placeholder="Enter Discount" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="StockQuantity"><strong>Stock Quantity</strong></label>
+                        <input type="number" class="form-control" id="StockQuantity" name="Product.StockQuantity" placeholder="Enter stock quantity" required />
                     </div>
                     <div class="form-group">
                         <label for="Storeroom"><strong>Storeroom</strong></label>
-                        <input type="number" class="form-control" id="Storeroom" name="Storeroom" placeholder="Enter Storeroom ID" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="UpdateUnitPrice"><strong>Unit Price</strong></label>
-                        <input type="number" class="form-control" id="UpdateUnitPrice" name="UnitPrice" placeholder="Enter updated unit price" required />
+                        <input type="number" class="form-control" id="Storeroom" name="Product.Storeroom" placeholder="Enter Storeroom ID" required />
                     </div>
                 </div>
                 <div class="modal-footer">
