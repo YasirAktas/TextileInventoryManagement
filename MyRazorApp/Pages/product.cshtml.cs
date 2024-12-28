@@ -17,8 +17,8 @@ namespace MyRazorApp.Pages
             // Populate Products list (this can be replaced by data from your database)
            Products = new List<Product>
 {
-    new Product { Id = 1, Name = "Shirt", StockQuantity = 100, UnitPrice = 20 },
-    new Product { Id = 2, Name = "Pants", StockQuantity = 50, UnitPrice = 40 }
+    new Product { Id = 1, Name = "Shirt", StockQuantity = 100, UnitPrice = 20, Storeroom = 1 },
+    new Product { Id = 2, Name = "Pants", StockQuantity = 50, UnitPrice = 40, Storeroom = 2}
 };
 
 

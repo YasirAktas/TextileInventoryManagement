@@ -41,6 +41,13 @@ namespace MyRazorApp.Pages
                 new Product { Name = "Shirt", StockQuantity = 100 },
                 new Product { Name = "Pants", StockQuantity = 50 },
                 new Product { Name = "Jacket", StockQuantity = 30 },
+                new Product { Name = "Socks", StockQuantity = 5 },
+                new Product { Name = "Gloves", StockQuantity = 2 },
+                new Product { Name = "Socks", StockQuantity = 5 },
+                new Product { Name = "Gloves", StockQuantity = 2 },
+                new Product { Name = "Socks", StockQuantity = 5 },
+                new Product { Name = "Gloves", StockQuantity = 2 },
+                
             };
         }
 

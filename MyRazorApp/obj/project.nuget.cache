@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "nU0NkYIf/jJqDcppCehxuzM0buidDKPIF+Ttg+5pTVy6mCzqtld/GIk/SugLl4rh+asfIhx3i9RIklzFfjhRbQ==",
+  "dgSpecHash": "yr+InPZMIMPgohUAyMNBNPPDH9wf34NUycakaLyAMUABG/G8qmgbp8suUqhqdR727AyhgnlE7mHyEvsR2jbBow==",
   "success": true,
   "projectFilePath": "/Users/ezhermemeti/Desktop/DATABASE/TextileInventoryManagement/MyRazorApp/MyRazorApp.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/Users/ezhermemeti/.nuget/packages/microsoft.entityframeworkcore.tools/9.0.0/microsoft.entityframeworkcore.tools.9.0.0.nupkg.sha512"
+  ],
   "logs": []
 }

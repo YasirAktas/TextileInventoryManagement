@@ -96,6 +96,11 @@ body {
   background-color: #0056b3;
 }
 
+.btn-primary {
+  background-color: rgb(41, 64, 90) !important;
+  color: white !important;
+}
+
 /* Footer Styles */
 footer {
   background-color: #333;

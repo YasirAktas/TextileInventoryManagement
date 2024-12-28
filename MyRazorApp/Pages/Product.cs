@@ -6,6 +6,8 @@ namespace MyRazorApp.Pages
         public string Name { get; set; }
         public int StockQuantity { get; set; }
         public decimal UnitPrice { get; set; }
+        public decimal Storeroom { get; set; }
+        // public string Color { get; set; }
         public decimal TotalPrice => StockQuantity * UnitPrice;
     }
 }
