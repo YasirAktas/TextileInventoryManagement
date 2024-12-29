@@ -2,12 +2,14 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace MyRazorApp.Pages
 {
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
+        private readonly string connectionString = "Server=127.0.0.1,1433; Database=TIMS; User ID=sa; Password=reallyStrongPwd123; Encrypt=false;";
 
         // Properties to hold the list of products and revenue
         public List<Product> TotalProducts { get; set; }
@@ -23,51 +25,81 @@ namespace MyRazorApp.Pages
         // The OnGet method that populates the data
         public void OnGet()
         {
-            // Sample data for Total Products
-            TotalProducts = GetTotalProducts();
-
-            // Sample data for Low Stock Products
-            LowStockProducts = GetLowStockProducts();
-
-            // Sample data for Total Revenue
-            TotalRevenue = GetTotalRevenue();
+            TotalProducts = GetTotalProductsFromDatabase();
+            LowStockProducts = GetLowStockProductsFromDatabase();
+            TotalRevenue = GetTotalRevenueFromDatabase();
         }
 
-        // Method to return a list of all products (sample data)
-        private List<Product> GetTotalProducts()
+        private List<Product> GetTotalProductsFromDatabase()
         {
-            return new List<Product>
+            var products = new List<Product>();
+
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                new Product { Name = "Shirt", StockQuantity = 100 },
-                new Product { Name = "Pants", StockQuantity = 50 },
-                new Product { Name = "Jacket", StockQuantity = 30 },
-                new Product { Name = "Socks", StockQuantity = 5 },
-                new Product { Name = "Gloves", StockQuantity = 2 },
-                new Product { Name = "Socks", StockQuantity = 5 },
-                new Product { Name = "Gloves", StockQuantity = 2 },
-                new Product { Name = "Socks", StockQuantity = 5 },
-                new Product { Name = "Gloves", StockQuantity = 2 },
-                
-            };
+                string query = "SELECT ProductName, StockLevel FROM Product";
+                SqlCommand cmd = new SqlCommand(query, con);
+
+                con.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        products.Add(new Product
+                        {
+                            Name = reader.GetString(0),
+                            StockQuantity = reader.GetInt32(1)
+                        });
+                    }
+                }
+            }
+
+            return products;
         }
 
-        // Method to return a list of low stock products (sample data)
-        private List<Product> GetLowStockProducts()
+        private List<Product> GetLowStockProductsFromDatabase()
         {
-            return new List<Product>
+            var products = new List<Product>();
+
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                new Product { Name = "Socks", StockQuantity = 5 },
-                new Product { Name = "Gloves", StockQuantity = 2 },
-                new Product { Name = "Scarf", StockQuantity = 8 }
-            };
+                string query = "SELECT ProductName, StockLevel FROM Product WHERE StockLevel < 51";
+                SqlCommand cmd = new SqlCommand(query, con);
+
+                con.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        products.Add(new Product
+                        {
+                            Name = reader.GetString(0),
+                            StockQuantity = reader.GetInt32(1)
+                        });
+                    }
+                }
+            }
+
+            return products;
         }
 
-        // Method to return total revenue (sample data)
-        private decimal GetTotalRevenue()
+        private decimal GetTotalRevenueFromDatabase()
         {
-            return 5000.00m; // Example total revenue
+            decimal totalRevenue = 0;
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = "SELECT SUM(UnitPrice * StockLevel) FROM Product";
+                SqlCommand cmd = new SqlCommand(query, con);
+
+                con.Open();
+                var result = cmd.ExecuteScalar();
+                if (result != null && result != DBNull.Value)
+                {
+                    totalRevenue = (decimal)result;
+                }
+            }
+
+            return totalRevenue;
         }
     }
-
 }
-

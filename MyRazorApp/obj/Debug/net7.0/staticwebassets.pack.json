@@ -2,7 +2,7 @@
   "Files": [
     {
       "Id": "/Users/ezhermemeti/Desktop/DATABASE/TextileInventoryManagement/MyRazorApp/obj/Debug/net7.0/scopedcss/projectbundle/MyRazorApp.bundle.scp.css",
-      "PackagePath": "staticwebassets/MyRazorApp.bundle.scp.css"
+      "PackagePath": "staticwebassets/MyRazorApp.c0b77b7z78.bundle.scp.css"
     },
     {
       "Id": "/Users/ezhermemeti/Desktop/DATABASE/TextileInventoryManagement/MyRazorApp/wwwroot/css/site.css",
@@ -243,6 +243,10 @@
     {
       "Id": "/Users/ezhermemeti/Desktop/DATABASE/TextileInventoryManagement/MyRazorApp/wwwroot/lib/jquery/dist/jquery.min.map",
       "PackagePath": "staticwebassets/lib/jquery/dist/jquery.min.map"
+    },
+    {
+      "Id": "obj/Debug/net7.0/staticwebassets/msbuild.MyRazorApp.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
     },
     {
       "Id": "obj/Debug/net7.0/staticwebassets/msbuild.MyRazorApp.Microsoft.AspNetCore.StaticWebAssets.props",

@@ -12,12 +12,29 @@
                 <div class="card-body text-center">
                     <h5 class="card-title">Total Products</h5>
                     <ul class="list-group">
-                        @foreach (var product in Model.TotalProducts)
+                        @* @foreach (var product in Model.TotalProducts)
                         {
                             <li class="list-group-item">
                                 @product.Name - @product.StockQuantity
                             </li>
-                        }
+                        } *@
+                        <table class="table">
+                            <thead>
+                                <tr class = "text-white">
+                                    <th>Product Name</th>
+                                    <th>Stock Level</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var product in Model.TotalProducts)
+                                {
+                                    <tr class="text-white">
+                                        <td>@product.Name</td>
+                                        <td>@product.StockQuantity</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     </ul>
                 </div>
             </div>
@@ -27,12 +44,29 @@
                 <div class="card-body text-center">
                     <h5 class="card-title">Low Stock Products</h5>
                     <ul class="list-group">
-                        @foreach (var product in Model.LowStockProducts)
+                        @* @foreach (var product in Model.LowStockProducts)
                         {
                             <li class="list-group-item">
                                 @product.Name - @product.StockQuantity
                             </li>
-                        }
+                        } *@
+                        <table class="table">
+                            <thead>
+                                <tr class = "text-white">
+                                    <th>Product Name</th>
+                                    <th>Stock Level</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var product in Model.LowStockProducts)
+                                {
+                                    <tr class="text-white">
+                                        <td>@product.Name</td>
+                                        <td>@product.StockQuantity</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     </ul>
                 </div>
             </div>
