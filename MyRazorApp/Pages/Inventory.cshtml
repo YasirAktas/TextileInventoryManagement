@@ -1,0 +1,88 @@
+@page
+@model MyRazorApp.Pages.InventoryModel
+@{
+    ViewData["Title"] = "Inventory Management";
+}
+
+<div class="container">
+    <h1 class="text-center">Textile Inventory Management System</h1>
+    <div class="row mt-4">
+        <!-- Storeroom 1 Table -->
+        <div class="col-md-4">
+            <div class="card text-white bg-secondary">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Storeroom 1</h5>
+                    <table class="table">
+                        <thead>
+                            <tr class="text-white">
+                                <th>Product Name</th>
+                                <th>Stock Level</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var product in Model.Storeroom1Products)
+                            {
+                                <tr class="text-white">
+                                    <td>@product.Name</td>
+                                    <td>@product.StockQuantity</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Storeroom 2 Table -->
+        <div class="col-md-4">
+            <div class="card text-white bg-secondary">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Storeroom 2</h5>
+                    <table class="table">
+                        <thead>
+                            <tr class="text-white">
+                                <th>Product Name</th>
+                                <th>Stock Level</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var product in Model.Storeroom2Products)
+                            {
+                                <tr class="text-white">
+                                    <td>@product.Name</td>
+                                    <td>@product.StockQuantity</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Storeroom 3 Table -->
+        <div class="col-md-4">
+            <div class="card text-white bg-secondary">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Storeroom 3</h5>
+                    <table class="table">
+                        <thead>
+                            <tr class="text-white">
+                                <th>Product Name</th>
+                                <th>Stock Level</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var product in Model.Storeroom3Products)
+                            {
+                                <tr class="text-white">
+                                    <td>@product.Name</td>
+                                    <td>@product.StockQuantity</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
