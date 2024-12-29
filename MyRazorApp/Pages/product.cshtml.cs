@@ -12,7 +12,7 @@ namespace MyRazorApp.Pages
         [BindProperty]
         public Product Product { get; set; }
 
-        private readonly string connectionString = "Data Source=Yasir;Database=TIMS;Integrated Security=True;";
+        private readonly string connectionString = "Server=127.0.0.1,1433; Database=TIMS; User ID=sa; Password=reallyStrongPwd123; Encrypt=false;";
 
         public void OnGet()
         {

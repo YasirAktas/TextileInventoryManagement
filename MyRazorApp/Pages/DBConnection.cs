@@ -16,7 +16,7 @@ namespace TIMS
         public DBConnection()
         {
             
-            con = new SqlConnection("Data Source=Yasir;Database=TIMS;Integrated Security=True;");
+            con = new SqlConnection("Server=127.0.0.1,1433; Database=TIMS; User ID=sa; Password=reallyStrongPwd123; Encrypt=false;");
         }
 
         public DataSet getSelect(string sqlstr)
