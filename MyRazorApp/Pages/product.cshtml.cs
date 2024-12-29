@@ -55,7 +55,7 @@ namespace MyRazorApp.Pages
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                string query = "SELECT ProductCode, ProductName, StockLevel, UnitPrice, StoreroomID FROM Product";
+                string query = "SELECT ProductName, AgeGroup, UnitPrice, StockLevel, StoreroomID FROM ProductView";
                 SqlCommand cmd = new SqlCommand(query, con);
 
                 con.Open();
@@ -65,10 +65,10 @@ namespace MyRazorApp.Pages
                     {
                         products.Add(new Product
                         {
-                            Id = reader.GetInt32(0),
-                            Name = reader.GetString(1),
-                            StockQuantity = reader.GetInt32(2),
-                            UnitPrice = reader.GetDecimal(3),
+                            Name = reader.GetString(0),
+                            AgeGroup = reader.GetString(1),
+                            UnitPrice = reader.GetDecimal(2),
+                            StockQuantity = reader.GetInt32(3),
                             Storeroom = reader.GetInt32(4)
                         });
                     }
