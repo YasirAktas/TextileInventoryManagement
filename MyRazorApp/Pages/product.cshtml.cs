@@ -33,23 +33,24 @@ namespace MyRazorApp.Pages
                 var productId = int.Parse(Request.Form["ProductId"]);
                 DeleteProduct(productId);
             }
+            else if (Request.Form["action"] == "addColor")
+            {
+                // Extract data for adding a product color
+                int productCode = int.Parse(Request.Form["Product.Id"]);
+                int colorID = int.Parse(Request.Form["productColor.ColorID"]);
+                int quantity = int.Parse(Request.Form["productColor.Quantity"]);
+                decimal pricePerUnit = decimal.Parse(Request.Form["Product.UnitPrice"]); // Assuming UnitPrice is passed
+
+                UpdateProduct(productCode, colorID, quantity, pricePerUnit);
+            }
             else
             {
-                if (Product.Id == 0)
-                {
-                    // AddProduct(Product);
-                     UpdateProduct(Product, color, productColor);
-                }
-                else
-                {
-                    UpdateProduct(Product, color, productColor);
-                }
+                // Handle other actions, e.g., adding/updating product
             }
-            
-
 
             return RedirectToPage();
         }
+
 
         public IActionResult OnPostDelete(int id)
         {
@@ -142,30 +143,27 @@ namespace MyRazorApp.Pages
         }
 
 
-        private void UpdateProduct(Product product, Color color, ProductColor productColor )
+        private void UpdateProduct(int productCode, int colorID, int quantity, decimal pricePerUnit)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                // Define the stored procedure name
                 string procedureName = "AddProductColor";
 
-                // Create the SQL command
                 using (SqlCommand cmd = new SqlCommand(procedureName, con))
                 {
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-                    // Add parameters to the command
-                    cmd.Parameters.AddWithValue("@ProductCode", product.Id);
-                    cmd.Parameters.AddWithValue("@ColorID", color.ColorID);
-                    cmd.Parameters.AddWithValue("@Quantity", productColor.Quantity);
-                    cmd.Parameters.AddWithValue("@PricePerUnit", product.UnitPrice);
+                    cmd.Parameters.AddWithValue("@ProductCode", productCode);
+                    cmd.Parameters.AddWithValue("@ColorID", colorID);
+                    cmd.Parameters.AddWithValue("@Quantity", quantity);
+                    cmd.Parameters.AddWithValue("@PricePerUnit", pricePerUnit);
 
-                    // Open the connection and execute the command
                     con.Open();
                     cmd.ExecuteNonQuery();
                 }
             }
         }
+
 
         private void DeleteProduct(int productCode)
         {

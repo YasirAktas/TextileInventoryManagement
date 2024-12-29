@@ -51,7 +51,7 @@
                 <td>
                     <!-- Button to Open Update Product Form -->
                     <button class="btn btn-info" data-toggle="modal" data-target="#updateProductModal"
-                        data-id="@product.Id" data-name="@product.Name" data-quantity="@product.StockQuantity" data-price="@product.UnitPrice">Add Color</button>
+                     data-id="@product.Id">Add Color</button>
 
                     <!-- Delete Product Button -->
                     <form method="post" style="display:inline;">
@@ -125,27 +125,40 @@
             </div>
             <form method="post">
                 <div class="modal-body">
+                    <!-- Hidden field for Product ID -->
+                    <input type="hidden" id="ProductCode" name="Product.Id" />
+
+                    <!-- Dropdown to select color -->
                     <div class="form-group">
-                        <label for="ProductColorID"><strong>Color</strong></label>
-                        <!-- Dropdown to select product from the list -->
-                        <select class="form-control" id="ColorID" name="ColorID" required>
+                        <label for="ColorID"><strong>Color</strong></label>
+                        <select class="form-control" id="ColorID" name="productColor.ColorID" required>
                             <option value="">Select a color</option>
-                            @foreach (var Color in Model.Colors)
+                            @foreach (var color in Model.Colors)
                             {
-                                <option value="@Color.ColorID">@Color.ColorName</option>
+                                <option value="@color.ColorID">@color.ColorName</option>
                             }
                         </select>
                     </div>
+
+                    <!-- Input for Quantity -->
                     <div class="form-group">
                         <label for="Quantity"><strong>Quantity</strong></label>
-                        <input type="number" class="form-control" id="Quantity" name="Quantity" placeholder="Enter quantity" required />
+                        <input type="number" class="form-control" id="Quantity" name="productColor.Quantity" placeholder="Enter quantity" required />
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Add Sale</button>
+                    <button type="submit" class="btn btn-primary">Add Color</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+<script>
+    $('#updateProductModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var productCode = button.data('id'); // Extract info from data-id attribute
+        var modal = $(this);
+        modal.find('#ProductCode').val(productCode); // Set the ProductCode in the hidden input
+    });
+</script>
