@@ -40,6 +40,7 @@ namespace MyRazorApp.Pages
                 int colorID = int.Parse(Request.Form["productColor.ColorID"]);
                 int quantity = int.Parse(Request.Form["productColor.Quantity"]);
                 decimal pricePerUnit = Product.UnitPrice; // Assuming UnitPrice is passed
+                //HATALI DUZELTILMESI LAZIM
 
                 UpdateProduct(productCode, colorID, quantity, pricePerUnit);
             }
