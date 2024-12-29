@@ -14,6 +14,7 @@
     <!-- jQuery and Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    using TIMS.Models;
 </body>
 
 
@@ -50,7 +51,7 @@
                 <td>
                     <!-- Button to Open Update Product Form -->
                     <button class="btn btn-info" data-toggle="modal" data-target="#updateProductModal"
-                        data-id="@product.Id" data-name="@product.Name" data-quantity="@product.StockQuantity" data-price="@product.UnitPrice">Edit</button>
+                        data-id="@product.Id" data-name="@product.Name" data-quantity="@product.StockQuantity" data-price="@product.UnitPrice">Add Color</button>
 
                     <!-- Delete Product Button -->
                     <form method="post" style="display:inline;">
@@ -124,30 +125,18 @@
             </div>
             <form method="post">
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label for="Name"><strong>Product Name</strong></label>
-                        <input type="text" class="form-control" id="Name" name="Product.Name" placeholder="Enter product name" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="Age Group"><strong>Age Group</strong></label>
-                        <input type="text" class="form-control" id="AgeGroup" name="Product.AgeGroup" placeholder="Enter Age Group" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="UnitPrice"><strong>Unit Price</strong></label>
-                        <input type="number" class="form-control" id="UnitPrice" name="Product.UnitPrice" placeholder="Enter unit price" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="Discount"><strong>Discount</strong></label>
-                        <input type="number" class="form-control" id="Discount" name="Product.Discount" placeholder="Enter Discount" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="StockQuantity"><strong>Stock Quantity</strong></label>
-                        <input type="number" class="form-control" id="StockQuantity" name="Product.StockQuantity" placeholder="Enter stock quantity" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="Storeroom"><strong>Storeroom</strong></label>
-                        <input type="number" class="form-control" id="Storeroom" name="Product.Storeroom" placeholder="Enter Storeroom ID" required />
-                    </div>
+                    <label for="ProductColorID"><strong>Product Color</strong></label>
+                    <!-- Dropdown to select a product color from the list -->
+                    <select class="form-control" id="ProductColorID" name="Sale.ProductColorID" required>
+                        <option value="">Select a Product Color</option>
+                        
+                        
+                            foreach (var color in Color)  <!-- Assuming each product has a collection of colors -->
+                            {
+                                <option value="@color.ColorID">@product.Name - @color.ColorName</option>
+                            }
+                        
+                    </select>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
