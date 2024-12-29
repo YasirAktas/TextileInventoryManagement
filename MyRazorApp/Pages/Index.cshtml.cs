@@ -36,7 +36,7 @@ namespace MyRazorApp.Pages
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                string query = "SELECT ProductName, StockLevel FROM Product";
+                string query = "SELECT ProductName, StockLevel FROM ProductStockView"; // Query the view
                 SqlCommand cmd = new SqlCommand(query, con);
 
                 con.Open();
@@ -46,12 +46,13 @@ namespace MyRazorApp.Pages
                     {
                         products.Add(new Product
                         {
-                            Name = reader.GetString(0),
-                            StockQuantity = reader.GetInt32(1)
+                            Name = reader.GetString(0), // ProductName
+                            StockQuantity = reader.GetInt32(1) // StockLevel
                         });
                     }
                 }
             }
+
 
             return products;
         }
@@ -62,7 +63,7 @@ namespace MyRazorApp.Pages
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                string query = "SELECT ProductName, StockLevel FROM Product WHERE StockLevel < 51";
+                string query = "SELECT ProductName, StockLevel FROM ProductStockView Where StockLevel < 51"; // Query the view
                 SqlCommand cmd = new SqlCommand(query, con);
 
                 con.Open();
@@ -72,8 +73,8 @@ namespace MyRazorApp.Pages
                     {
                         products.Add(new Product
                         {
-                            Name = reader.GetString(0),
-                            StockQuantity = reader.GetInt32(1)
+                            Name = reader.GetString(0), // ProductName
+                            StockQuantity = reader.GetInt32(1) // StockLevel
                         });
                     }
                 }
