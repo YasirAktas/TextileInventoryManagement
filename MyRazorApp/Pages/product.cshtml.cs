@@ -11,12 +11,19 @@ namespace MyRazorApp.Pages
         public List<Product> Products { get; set; }
         [BindProperty]
         public Product Product { get; set; }
+        public List<Color> Colors {get; set; }
+        public List<ProductColor> productColors {get;set;}
 
-        private readonly string connectionString = "Data Source=Yasir;Database=TIMS;Integrated Security=True;";
+        [BindProperty]
+        public ProductColor productColor {get; set;} 
+        public Color color {get; set; }
+
+        private readonly string connectionString = "Server=127.0.0.1,1433; Database=TIMS; User ID=sa; Password=reallyStrongPwd123; Encrypt=false;";
 
         public void OnGet()
         {
             Products = GetProductsFromDatabase();
+            Colors = getColors();
         }
 
         public IActionResult OnPost()
@@ -30,11 +37,12 @@ namespace MyRazorApp.Pages
             {
                 if (Product.Id == 0)
                 {
-                    AddProduct(Product);
+                    // AddProduct(Product);
+                     UpdateProduct(Product, color, productColor);
                 }
                 else
                 {
-                    UpdateProduct(Product);
+                    UpdateProduct(Product, color, productColor);
                 }
             }
             
@@ -79,6 +87,33 @@ namespace MyRazorApp.Pages
             return products;
         }
 
+        private List<Color> getColors()
+        {
+            var colors = new List<Color>();
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = "SELECT ColorID, ColorName from Color";
+                SqlCommand cmd = new SqlCommand(query, con);
+
+                con.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        colors.Add(new Color
+                        {
+                            ColorID = reader.GetInt32(0),
+                            ColorName = reader.GetString(1),
+                        });
+                    }
+                }
+            }
+
+            return colors;
+        }
+
+
        private void AddProduct(Product product)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
@@ -107,12 +142,12 @@ namespace MyRazorApp.Pages
         }
 
 
-        private void UpdateProduct(Product product)
+        private void UpdateProduct(Product product, Color color, ProductColor productColor )
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 // Define the stored procedure name
-                string procedureName = "UpdateProduct";
+                string procedureName = "AddProductColor";
 
                 // Create the SQL command
                 using (SqlCommand cmd = new SqlCommand(procedureName, con))
@@ -121,12 +156,9 @@ namespace MyRazorApp.Pages
 
                     // Add parameters to the command
                     cmd.Parameters.AddWithValue("@ProductCode", product.Id);
-                    cmd.Parameters.AddWithValue("@ProductName", product.Name);
-                    cmd.Parameters.AddWithValue("@AgeGroup", product.AgeGroup);
-                    cmd.Parameters.AddWithValue("@UnitPrice", product.UnitPrice);
-                    cmd.Parameters.AddWithValue("@StockLevel", product.StockQuantity);
-                    cmd.Parameters.AddWithValue("@Discount", product.Discount);
-                    cmd.Parameters.AddWithValue("@StoreroomID", product.Storeroom);
+                    cmd.Parameters.AddWithValue("@ColorID", color.ColorID);
+                    cmd.Parameters.AddWithValue("@Quantity", productColor.Quantity);
+                    cmd.Parameters.AddWithValue("@PricePerUnit", product.UnitPrice);
 
                     // Open the connection and execute the command
                     con.Open();
