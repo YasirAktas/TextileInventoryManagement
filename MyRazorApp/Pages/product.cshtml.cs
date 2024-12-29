@@ -33,19 +33,19 @@ namespace MyRazorApp.Pages
                 var productId = int.Parse(Request.Form["ProductId"]);
                 DeleteProduct(productId);
             }
-            else if (Request.Form["action"] == "addColor")
+            else if (Product.Id > 0)
             {
                 // Extract data for adding a product color
                 int productCode = int.Parse(Request.Form["Product.Id"]);
                 int colorID = int.Parse(Request.Form["productColor.ColorID"]);
                 int quantity = int.Parse(Request.Form["productColor.Quantity"]);
-                decimal pricePerUnit = decimal.Parse(Request.Form["Product.UnitPrice"]); // Assuming UnitPrice is passed
+                decimal pricePerUnit = Product.UnitPrice; // Assuming UnitPrice is passed
 
                 UpdateProduct(productCode, colorID, quantity, pricePerUnit);
             }
             else
             {
-                // Handle other actions, e.g., adding/updating product
+                AddProduct(Product);
             }
 
             return RedirectToPage();
