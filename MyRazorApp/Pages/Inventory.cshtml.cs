@@ -15,6 +15,7 @@ namespace MyRazorApp.Pages
         public List<StoreroomProduct> Storeroom1Products { get; set; }
         public List<StoreroomProduct> Storeroom2Products { get; set; }
         public List<StoreroomProduct> Storeroom3Products { get; set; }
+        public List<ProductColorView> ProductColors { get; set; }
 
         // Constructor to initialize the logger
         public InventoryModel(ILogger<InventoryModel> logger)
@@ -29,6 +30,7 @@ namespace MyRazorApp.Pages
             Storeroom1Products = GetStoreroomProductsFromDatabase(1);
             Storeroom2Products = GetStoreroomProductsFromDatabase(2);
             Storeroom3Products = GetStoreroomProductsFromDatabase(3);
+            ProductColors = GetProductColorFromDatabase();
         }
 
         // Method to get products from a specific storeroom
@@ -58,7 +60,45 @@ namespace MyRazorApp.Pages
 
             return products;
         }
+        private List<ProductColorView> GetProductColorFromDatabase()
+        {
+            var products = new List<ProductColorView>();
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = "SELECT ProductName, AgeGroup, Color, Quantity FROM ProductColorView WHERE ProductName = @ProductName AND AgeGroup = @AgeGroup";
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@ProductName", "Bluz");
+                cmd.Parameters.AddWithValue("@AgeGroup", "14-12");
+
+
+                con.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        products.Add(new ProductColorView
+                        {
+                            ProductName = reader.GetString(0), // ProductName
+                            AgeGroup = reader.GetString(1), // StockLevel
+                            Color = reader.GetString(2),
+                            Quantity = reader.GetInt32(3)
+                        });
+                    }
+                }
+            }
+
+            return products;
+        }
     }
+    
+    public class ProductColorView
+{
+    public string ProductName { get; set; }
+    public string AgeGroup { get; set; }
+    public string Color { get; set; }
+    public int Quantity { get; set; }
+}
 
     // Product class definition
     public class StoreroomProduct
