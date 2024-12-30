@@ -132,7 +132,6 @@ namespace MyRazorApp.Pages
                     cmd.Parameters.AddWithValue("@ProductName", product.Name);
                     cmd.Parameters.AddWithValue("@AgeGroup", product.AgeGroup);
                     cmd.Parameters.AddWithValue("@UnitPrice", product.UnitPrice);
-                    cmd.Parameters.AddWithValue("@StockLevel", product.StockQuantity);
                     cmd.Parameters.AddWithValue("@Discount", product.Discount);
                     cmd.Parameters.AddWithValue("@StoreroomID", product.Storeroom);
 
