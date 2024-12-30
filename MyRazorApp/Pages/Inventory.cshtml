@@ -84,6 +84,22 @@
                 </div>
             </div>
         </div>
+
+        <h3 class=>Product Color View</h3>
+<!-- Dropdowns for filtering -->
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="productNameFilter">Filter by Product Name:</label>
+                <select id="productName" class="form-control" onchange="this.form.submit()" name="productName">
+                    <option value="">All</option>
+                     @foreach (var product in Model.ProductColors.DistinctBy(p => p.ProductName))
+                        {
+                            <option value="@product.ProductName">@product.ProductName</option>
+                        }
+                </select>
+            </div>
+        </div>
+
         <table class="table">
             <thead>
                 <tr>
@@ -91,22 +107,19 @@
                     <th>Age Group</th>
                     <th>Color</th>
                     <th>Quantity</th>
-                    <th>Actions</th>
 
                 </tr>
             </thead>
-            @* <tbody>
-                @foreach (var product in Model.Products)
+            <tbody>
+                @foreach (var product in Model.ProductColors)
                 {
                     <tr>
-                        <td>@product.Name</td>
-                        <td>@product.StockQuantity</td>
-                        <td>@product.UnitPrice</td>
-                        <td>@(product.UnitPrice * product.StockQuantity)</td>
-                        <td>@product.Storeroom</td>
-                        <td>@product.Storeroom</td>
-                        <td>
-                            <!-- Button to Open Update Product Form -->
+                        <td>@product.ProductName</td>
+                        <td>@product.AgeGroup</td>
+                        <td>@product.Color</td>
+                        <td>@product.Quantity</td>
+                        @* <td> *@
+                            @* <!-- Button to Open Update Product Form -->
                             <input type="hidden" name="ProductId" value="@product.Id"/>
                             <button class="btn btn-info" data-toggle="modal" data-target="#updateProductModal" name="action" value="addColor"
                             data-id="@product.Id">Add Color</button>
@@ -116,11 +129,11 @@
                                 <input type="hidden" name="ProductId" value="@product.Id"/>
                                 <button type="submit" class="btn btn-danger" name="action" value="delete" formaction="@Url.Page("Product", new { action = "Delete", id = product.Id })"
                                     onclick="return confirm('Are you sure you want to delete this product?');">Delete</button>
-                            </form>
-                        </td>
+                            </form> *@
+                        @* </td> *@
                     </tr>
                 }
-            </tbody> *@
+            </tbody>
         </table>
     </div>
 </div>

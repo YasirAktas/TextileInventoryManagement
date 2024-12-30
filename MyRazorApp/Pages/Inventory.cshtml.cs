@@ -26,6 +26,7 @@ namespace MyRazorApp.Pages
         // The OnGet method that populates the data for the page
         public void OnGet()
         {
+            // String productName = Request.Form["ProductName"];
             // Fetch products for each storeroom
             Storeroom1Products = GetStoreroomProductsFromDatabase(1);
             Storeroom2Products = GetStoreroomProductsFromDatabase(2);
@@ -66,10 +67,9 @@ namespace MyRazorApp.Pages
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                string query = "SELECT ProductName, AgeGroup, Color, Quantity FROM ProductColorView WHERE ProductName = @ProductName AND AgeGroup = @AgeGroup";
+                string query = "SELECT ProductName, AgeGroup, Color, Quantity FROM ProductColorView";
                 SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@ProductName", "Bluz");
-                cmd.Parameters.AddWithValue("@AgeGroup", "14-12");
+                // cmd.Parameters.AddWithValue("@ProductName", ProductName);
 
 
                 con.Open();
