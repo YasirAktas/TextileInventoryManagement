@@ -1,25 +1,31 @@
 {
   "format": 1,
   "restore": {
-    "/Users/ezhermemeti/Desktop/DATABASE/TextileInventoryManagement/MyRazorApp/MyRazorApp.csproj": {}
+    "C:\\Users\\yasir\\vscodeide\\TextileInventoryManagement\\MyRazorApp\\MyRazorApp.csproj": {}
   },
   "projects": {
-    "/Users/ezhermemeti/Desktop/DATABASE/TextileInventoryManagement/MyRazorApp/MyRazorApp.csproj": {
+    "C:\\Users\\yasir\\vscodeide\\TextileInventoryManagement\\MyRazorApp\\MyRazorApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/ezhermemeti/Desktop/DATABASE/TextileInventoryManagement/MyRazorApp/MyRazorApp.csproj",
+        "projectUniqueName": "C:\\Users\\yasir\\vscodeide\\TextileInventoryManagement\\MyRazorApp\\MyRazorApp.csproj",
         "projectName": "MyRazorApp",
-        "projectPath": "/Users/ezhermemeti/Desktop/DATABASE/TextileInventoryManagement/MyRazorApp/MyRazorApp.csproj",
-        "packagesPath": "/Users/ezhermemeti/.nuget/packages/",
-        "outputPath": "/Users/ezhermemeti/Desktop/DATABASE/TextileInventoryManagement/MyRazorApp/obj/",
+        "projectPath": "C:\\Users\\yasir\\vscodeide\\TextileInventoryManagement\\MyRazorApp\\MyRazorApp.csproj",
+        "packagesPath": "C:\\Users\\yasir\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\yasir\\vscodeide\\TextileInventoryManagement\\MyRazorApp\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/Users/ezhermemeti/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\yasir\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -72,11 +78,15 @@
               "version": "[7.0.20, 7.0.20]"
             },
             {
-              "name": "Microsoft.NETCore.App.Host.osx-arm64",
+              "name": "Microsoft.NETCore.App.Host.win-x64",
               "version": "[7.0.20, 7.0.20]"
             },
             {
               "name": "Microsoft.NETCore.App.Ref",
+              "version": "[7.0.20, 7.0.20]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
               "version": "[7.0.20, 7.0.20]"
             }
           ],
@@ -88,7 +98,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.101/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }
