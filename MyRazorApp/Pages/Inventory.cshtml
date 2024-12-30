@@ -87,18 +87,31 @@
 
         <h3 class=>Product Color View</h3>
 <!-- Dropdowns for filtering -->
-        <div class="row mb-3">
-            <div class="col-md-6">
-                <label for="productNameFilter">Filter by Product Name:</label>
-                <select id="productName" class="form-control" onchange="this.form.submit()" name="productName">
-                    <option value="">All</option>
-                     @foreach (var product in Model.ProductColors.DistinctBy(p => p.ProductName))
+        <form method="post">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="productNameFilter">Filter by Product Name:</label>
+                    <select id="productName" class="form-control" name="productName" onchange="this.form.submit()">
+                        <option value="@Model.SelectedProductName">@Model.SelectedProductName</option>
+                        @foreach (var product in Model.ProductColors.DistinctBy(p => p.ProductName))
                         {
-                            <option value="@product.ProductName">@product.ProductName</option>
+                            if (product.ProductName == Model.SelectedProductName)
+                            {
+                                <text>
+                                    <option value="@product.ProductName" selected>@product.ProductName</option>
+                                </text>
+                            }
+                            else
+                            {
+                                <text>
+                                    <option value="@product.ProductName">@product.ProductName</option>
+                                </text>
+                            }
                         }
-                </select>
+                    </select>
+                </div>
             </div>
-        </div>
+        </form>
 
         <table class="table">
             <thead>
