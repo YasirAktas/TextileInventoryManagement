@@ -31,6 +31,7 @@
         <tr>
             <th>Sale ID</th>
             <th>Product Name</th> <!-- Adjusted to match Sale model -->
+            <th>Color</th>
             <th>Quantity</th>
             <th>Sale Date</th>
         </tr>
@@ -40,7 +41,8 @@
         {
             <tr>
                 <td>@sale.Id</td>
-                <td>@sale.ProductColorID</td> <!-- Correct column -->
+                <td>@sale.ProductName</td> <!-- Correct column -->
+                <td>@sale.Color</td>
                 <td>@sale.Quantity</td>
                 <td>@sale.SaleDate.ToString("yyyy-MM-dd")</td>
             </tr>

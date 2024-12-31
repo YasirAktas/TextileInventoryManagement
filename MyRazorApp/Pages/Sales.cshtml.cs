@@ -63,7 +63,7 @@ namespace MyRazorApp.Pages
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                string query = "SELECT SaleID, ProductColorID, Quantity, SaleDate FROM Sale";
+                string query = "SELECT SaleID, ProductName,ProductColorID, ColorName, Quantity, SaleDate from salesView";
                 SqlCommand cmd = new SqlCommand(query, con);
 
                 con.Open();
@@ -74,9 +74,11 @@ namespace MyRazorApp.Pages
                         sales.Add(new Sale
                         {
                             Id = reader.GetInt32(0),
-                            ProductColorID = reader.GetInt32(1),
-                            Quantity = reader.GetInt32(2),
-                            SaleDate = reader.GetDateTime(3)
+                            ProductName = reader.GetString(1),
+                            ProductColorID = reader.GetInt32(2),
+                            Color = reader.GetString(3),
+                            Quantity = reader.GetInt32(4),
+                            SaleDate = reader.GetDateTime(5)
                         });
                     }
                 }
@@ -216,6 +218,8 @@ namespace MyRazorApp.Pages
     public class Sale
     {
         public int Id { get; set; } // Maps to SaleID
+        public string ProductName { get; set; }
+        public string Color {get; set;}
         public int ProductColorID { get; set; } // Maps to ProductColorID
         public int Quantity { get; set; } // Maps to Quantity
         public DateTime SaleDate { get; set; } // Maps to SaleDate
