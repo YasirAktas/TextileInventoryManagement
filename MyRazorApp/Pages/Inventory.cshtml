@@ -91,22 +91,12 @@
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label for="productNameFilter">Filter by Product Name:</label>
-                    <select id="productName" class="form-control" name="productName" onchange="this.form.submit()">
-                        <option value="@Model.SelectedProductName">@Model.SelectedProductName</option>
+                    <select id="productName" class="form-control" name="SelectedProductName" onchange="this.form.submit()">
+                        <option value="">-- Select Product --</option>
                         @foreach (var product in Model.ProductColors.DistinctBy(p => p.ProductName))
                         {
-                            if (product.ProductName == Model.SelectedProductName)
-                            {
-                                <text>
-                                    <option value="@product.ProductName" selected>@product.ProductName</option>
-                                </text>
-                            }
-                            else
-                            {
-                                <text>
-                                    <option value="@product.ProductName">@product.ProductName</option>
-                                </text>
-                            }
+                            bool isSelected = product.ProductName == Model.SelectedProductName;
+                            <option value="@product.ProductName" selected="@(isSelected ? "selected" : null)">@product.ProductName</option>
                         }
                     </select>
                 </div>
