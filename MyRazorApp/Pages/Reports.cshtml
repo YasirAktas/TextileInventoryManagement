@@ -1,0 +1,32 @@
+@page
+@model ReportsModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<h2>Sale Reports</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product Id</th>
+            <th>Product Name</th>
+            <th>Total Sold</th>
+            <th>Total Sales Value</th>
+            <th>Discount</th>
+            <th>Net Amount</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var report in Model.saleReports) {
+            <tr>
+                <td>@report.Id</td>
+                <td>@report.ProductName</td>
+                <td>@report.TotalSold</td>
+                <td>@report.TotalSalesValue</td>
+                <td>@report.Discount</td>
+                <td>@report.NetAmount</td>
+            </tr>
+        }
+    </tbody>
+</table>
