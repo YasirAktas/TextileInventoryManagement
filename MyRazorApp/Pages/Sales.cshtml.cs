@@ -24,7 +24,7 @@ namespace MyRazorApp.Pages
         {
             Sales = GetSalesFromDatabase();
             Products = GetProductsFromDatabase(); // Get the list of products
-            Colors = getColors();
+            LoadColors(SelectedProductId);
             Customers = GetCustomersFromDatabase();
         }
 
@@ -34,17 +34,27 @@ namespace MyRazorApp.Pages
             {
                 AddSale(Sale);
             }
-            // Ensure ProductColors contains all products for the dropdown
-            Colors = getColors();
 
             // Filter colors dynamically based on selected product
             var productId = int.Parse(Request.Form["SelectedProductId"]);
-            if (productId != null )
-            {
-                SelectedProductId = productId;
-                Colors = getColorsByProductId(productId);
-            }
+            LoadColors(productId);
             return RedirectToPage();
+        }
+        public JsonResult OnGetProductColors(int productId)
+        {
+            var colors = getColorsByProductId(productId);
+            return new JsonResult(colors.Select(color => new
+            {
+                ColorId = color.ColorID,
+                ColorName = color.ColorName
+            }));
+        }
+
+        private void LoadColors(int productId)
+        {
+            Colors = (productId==0)
+                ? getColors()
+                : getColorsByProductId(productId);
         }
 
          private List<Sale> GetSalesFromDatabase()
@@ -135,7 +145,7 @@ namespace MyRazorApp.Pages
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                string query = "SELECT C.ColorID, C.ColorName from Color C inner join Product_Color P on C.ColorID = P.ColorID inner join Product on p.ProductID = @ProductId";
+                string query = "SELECT C.ColorID, C.ColorName from Color C inner join Product_Color Pc on C.ColorID = Pc.ColorID where pc.ProductCode = @ProductId";
                 SqlCommand cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithValue("@ProductId", ProductId);
 
