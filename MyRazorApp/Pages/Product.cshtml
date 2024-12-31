@@ -27,13 +27,15 @@
 <h3>Product List</h3>
 
 <!-- Product Table -->
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
             <th>Name</th>
             <th>Stock Quantity</th>
             <th>Unit Price</th>
             <th>Total Price</th>
+            <th>Discount</th>
+            <th>Net Price</th>
             <th>Storeroom</th>
             <th>Actions</th>
             
@@ -46,7 +48,9 @@
                 <td>@product.Name</td>
                 <td>@product.StockQuantity</td>
                 <td>@product.UnitPrice</td>
-                <td>@(product.UnitPrice * product.StockQuantity)</td>
+                <td>@product.TotalPrice</td>
+                <th>%@product.Discount</th>
+                <th>@product.NetPrice.ToString("F2")</th>
                 <td>@product.Storeroom</td>
                 <td>
                     <!-- Button to Open Update Product Form -->
