@@ -11,13 +11,21 @@ namespace MyRazorApp.Pages
         public List<Product> Products { get; set; } // List of products for dropdown selection
         [BindProperty]
         public Sale Sale { get; set; }
-
+        public List<Color> Colors {get; set; }
+        public List<ProductColor> productColors {get;set;}
+         public List<Customer> Customers { get; set; }
+        [BindProperty]
+        public Customer Customer { get; set; }
         private readonly string connectionString = "Server=127.0.0.1,1433; Database=TIMS; User ID=sa; Password=reallyStrongPwd123; Encrypt=false;";
+         [BindProperty]
+        public int SelectedProductId { get; set; }
 
         public void OnGet()
         {
             Sales = GetSalesFromDatabase();
             Products = GetProductsFromDatabase(); // Get the list of products
+            Colors = getColors();
+            Customers = GetCustomersFromDatabase();
         }
 
         public IActionResult OnPost()
@@ -26,10 +34,20 @@ namespace MyRazorApp.Pages
             {
                 AddSale(Sale);
             }
+            // Ensure ProductColors contains all products for the dropdown
+            Colors = getColors();
+
+            // Filter colors dynamically based on selected product
+            var productId = int.Parse(Request.Form["SelectedProductId"]);
+            if (productId != null )
+            {
+                SelectedProductId = productId;
+                Colors = getColorsByProductId(productId);
+            }
             return RedirectToPage();
         }
 
-        private List<Sale> GetSalesFromDatabase()
+         private List<Sale> GetSalesFromDatabase()
         {
             var sales = new List<Sale>();
 
@@ -55,6 +73,35 @@ namespace MyRazorApp.Pages
             }
 
             return sales;
+        }
+         private List<Customer> GetCustomersFromDatabase()
+        {
+            var customers = new List<Customer>();
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = "SELECT CustomerID, CustomerName, PhoneNumber, Email, Address, CreatedAt FROM Customer";
+                SqlCommand cmd = new SqlCommand(query, con);
+
+                con.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        customers.Add(new Customer
+                        {
+                            CustomerID = reader.GetInt32(0),
+                            CustomerName = reader.GetString(1),
+                            PhoneNumber = reader.GetString(2),
+                            Email = reader.IsDBNull(3) ? null : reader.GetString(3),
+                            Address = reader.IsDBNull(4) ? null : reader.GetString(4),
+                            CreatedAt = reader.GetDateTime(5)
+                        });
+                    }
+                }
+            }
+
+            return customers;
         }
 
         private List<Product> GetProductsFromDatabase()
@@ -82,21 +129,72 @@ namespace MyRazorApp.Pages
 
             return products;
         }
+        private List<Color> getColorsByProductId(int ProductId)
+        {
+            var colors = new List<Color>();
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = "SELECT C.ColorID, C.ColorName from Color C inner join Product_Color P on C.ColorID = P.ColorID inner join Product on p.ProductID = @ProductId";
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@ProductId", ProductId);
+
+                con.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        colors.Add(new Color
+                        {
+                            ColorID = reader.GetInt32(0),
+                            ColorName = reader.GetString(1),
+                        });
+                    }
+                }
+            }
+
+            return colors;
+        }
+        private List<Color> getColors()
+        {
+            var colors = new List<Color>();
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = "SELECT C.ColorID, C.ColorName from Color C inner join Product_Color P on C.ColorID = P.ColorID";
+                SqlCommand cmd = new SqlCommand(query, con);
+
+                con.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        colors.Add(new Color
+                        {
+                            ColorID = reader.GetInt32(0),
+                            ColorName = reader.GetString(1),
+                        });
+                    }
+                }
+            }
+
+            return colors;
+        }
 
 
         private void AddSale(Sale sale)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                string procedureName = "RecordSale"; // Assuming you have a stored procedure named RecordSale
+                string procedureName = "AddSale"; // Assuming you have a stored procedure named RecordSale
 
                 using (SqlCommand cmd = new SqlCommand(procedureName, con))
                 {
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
+                    // Parameters for AddSale procedure
                     cmd.Parameters.AddWithValue("@ProductColorID", sale.ProductColorID); // ProductColorID
                     cmd.Parameters.AddWithValue("@Quantity", sale.Quantity); // Quantity
-                    cmd.Parameters.AddWithValue("@SaleDate", sale.SaleDate); // SaleDate
 
                     con.Open();
                     cmd.ExecuteNonQuery();
