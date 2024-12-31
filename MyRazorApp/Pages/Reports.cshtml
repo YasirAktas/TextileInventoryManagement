@@ -4,8 +4,8 @@
     ViewData["Title"] = "Home page";
 }
 
-<h2>Sale Reports</h2>
-<table class="table">
+<h2>Sale Report</h2>
+<table class="table table-striped">
     <thead>
         <tr>
             <th>Product Id</th>
@@ -26,6 +26,40 @@
                 <td>@report.TotalSalesValue</td>
                 <td>@report.Discount</td>
                 <td>@report.NetAmount</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h2>Transaction Report</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Product Code</th>
+            <th>Product Name</th>
+            <th>Color Name</th>
+            <th>Transaction Type</th>
+            <th>Total Quantity</th>
+            <th>Last Transaction Date</th>
+            <th>Storeroom Name</th>
+            <th>Stock Level After Transaction</th>
+            <th>Total Sales Value</th>
+            <th>Transaction Year</th>
+            <th>Transaction Month</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var report in Model.transactionReports)
+        {
+            <tr>
+                <td>@report.ProductCode</td>
+                <td>@report.ProductName</td>
+                <td>@report.ColorName</td>
+                <td>@report.TransactionType</td>
+                <td>@report.TotalQuantity</td>
+                <td>@report.LastTransactionDate.ToString("yyyy-MM-dd")</td>
+                <td>@report.StoreroomName</td>
+                <td>@report.StockLevelAfterTransaction</td>
             </tr>
         }
     </tbody>

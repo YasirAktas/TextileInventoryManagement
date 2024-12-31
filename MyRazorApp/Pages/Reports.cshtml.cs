@@ -8,12 +8,14 @@ namespace MyRazorApp.Pages
     public class ReportsModel : PageModel
     {
         public List<SaleReport> saleReports { get; set; }
+        public List<InventoryTransactionReport> transactionReports { get; set; } = new List<InventoryTransactionReport>();
 
         private readonly string connectionString = "Server=127.0.0.1,1433; Database=TIMS; User ID=sa; Password=reallyStrongPwd123; Encrypt=false;";
 
         public void OnGet()
         {
             saleReports = GetSaleReportsFromDatabase();  // Corrected the assignment
+            transactionReports = GetInventoryTransactionReports();
         }
 
         private List<SaleReport> GetSaleReportsFromDatabase()
@@ -45,6 +47,50 @@ namespace MyRazorApp.Pages
 
             return reports;
         }
+         private List<InventoryTransactionReport> GetInventoryTransactionReports()
+        {
+            var reports = new List<InventoryTransactionReport>();
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = @"
+                    SELECT 
+                        ProductCode,
+                        ProductName,
+                        ColorName,
+                        TransactionType,
+                        TotalQuantity,
+                        LastTransactionDate,
+                        StoreroomName,
+                        StockLevelAfterTransaction
+                    FROM InventoryTransactionReport";
+
+                SqlCommand cmd = new SqlCommand(query, con);
+                con.Open();
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        reports.Add(new InventoryTransactionReport
+                        {
+                            ProductCode = reader.GetString(0),
+                            ProductName = reader.GetString(1),
+                            ColorName = reader.GetString(2),
+                            TransactionType = reader.GetString(3),
+                            TotalQuantity = reader.GetInt32(4),
+                            LastTransactionDate = reader.GetDateTime(5),
+                            StoreroomName = reader.GetString(6),
+                            StockLevelAfterTransaction = reader.GetInt32(7),
+                        });
+                    }
+                }
+            }
+
+            return reports;
+        }
+
+        
     }
 
     public class SaleReport
@@ -56,4 +102,16 @@ namespace MyRazorApp.Pages
         public decimal Discount { get; set; } // Changed to decimal
         public decimal NetAmount { get; set; } // Changed to decimal
     }
+    public class InventoryTransactionReport
+        {
+            public string ProductCode { get; set; }
+            public string ProductName { get; set; }
+            public string ColorName { get; set; }
+            public string TransactionType { get; set; }
+            public int TotalQuantity { get; set; }
+            public DateTime LastTransactionDate { get; set; }
+            public string StoreroomName { get; set; }
+            public int StockLevelAfterTransaction { get; set; }
+        }
+    
 }

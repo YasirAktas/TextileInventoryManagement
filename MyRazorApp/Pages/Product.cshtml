@@ -14,7 +14,6 @@
     <!-- jQuery and Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-    using TIMS.Models;
 </body>
 
 
@@ -36,13 +35,6 @@
             <th>Unit Price</th>
             <th>Total Price</th>
             <th>Storeroom</th>
-            <th> <select class="form-control" id="ColorID" name="productColor.ColorID" required>
-                            <option value="">Select a color</option>
-                            @foreach (var color in Model.Colors)
-                            {
-                                <option value="@color.ColorID">@color.ColorName</option>
-                            }
-                        </select></th>
             <th>Actions</th>
             
         </tr>
@@ -55,7 +47,6 @@
                 <td>@product.StockQuantity</td>
                 <td>@product.UnitPrice</td>
                 <td>@(product.UnitPrice * product.StockQuantity)</td>
-                <td>@product.Storeroom</td>
                 <td>@product.Storeroom</td>
                 <td>
                     <!-- Button to Open Update Product Form -->
