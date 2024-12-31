@@ -16,13 +16,15 @@ namespace MyRazorApp.Pages
          public List<Customer> Customers { get; set; }
         [BindProperty]
         public Customer Customer { get; set; }
-        private readonly string connectionString = "Data Source=Yasir;Database=TIMS;Integrated Security=True;";
+        private readonly string connectionString = "Server=127.0.0.1,1433; Database=TIMS; User ID=sa; Password=reallyStrongPwd123; Encrypt=false;";
+         [BindProperty]
+        public int SelectedProductId { get; set; }
 
         public void OnGet()
         {
             Sales = GetSalesFromDatabase();
             Products = GetProductsFromDatabase(); // Get the list of products
-            Colors = getColors(Sale);
+            Colors = getColors();
             Customers = GetCustomersFromDatabase();
         }
 
@@ -31,6 +33,16 @@ namespace MyRazorApp.Pages
             if (Sale.Id == 0) // Only add if it's a new sale
             {
                 AddSale(Sale);
+            }
+            // Ensure ProductColors contains all products for the dropdown
+            Colors = getColors();
+
+            // Filter colors dynamically based on selected product
+            var productId = int.Parse(Request.Form["SelectedProductId"]);
+            if (productId != null )
+            {
+                SelectedProductId = productId;
+                Colors = getColorsByProductId(productId);
             }
             return RedirectToPage();
         }
@@ -117,14 +129,39 @@ namespace MyRazorApp.Pages
 
             return products;
         }
-        private List<Color> getColors(Sale sale)
+        private List<Color> getColorsByProductId(int ProductId)
         {
             var colors = new List<Color>();
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                int x = sale.ProductColorID;
-                string query = "SELECT C.ColorID, C.ColorName from Color C inner join Product_Color P on C.ColorID = P.ColorID inner join Product on p.ProductID = @x";
+                string query = "SELECT C.ColorID, C.ColorName from Color C inner join Product_Color P on C.ColorID = P.ColorID inner join Product on p.ProductID = @ProductId";
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@ProductId", ProductId);
+
+                con.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        colors.Add(new Color
+                        {
+                            ColorID = reader.GetInt32(0),
+                            ColorName = reader.GetString(1),
+                        });
+                    }
+                }
+            }
+
+            return colors;
+        }
+        private List<Color> getColors()
+        {
+            var colors = new List<Color>();
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = "SELECT C.ColorID, C.ColorName from Color C inner join Product_Color P on C.ColorID = P.ColorID";
                 SqlCommand cmd = new SqlCommand(query, con);
 
                 con.Open();

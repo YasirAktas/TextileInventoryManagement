@@ -63,13 +63,25 @@
                     <div class="form-group">
                         <label for="ID"><strong>Product</strong></label>
                         <!-- Dropdown to select product from the list -->
-                        <select class="form-control" id="ProductColorID" onchange="this.value()" name="Sale.ProductColorID" required>
-                            <option value="">Select a product</option>
+                        @* <select class="form-control" id="ProductID" onchange="this.value()" name="Sale.ProductColorID" required>
+                            @* <option value="">Select a product</option>
                             @foreach (var product in Model.Products)
                             {
                                 <option value="@product.Id">@product.Name</option>
-                            }
-                        </select>
+                            } 
+                        </select> *@
+                    <select class="form-control" id="ProductID" name="Sale.ProductColorID" onchange="fetchColors(this.value)" required>
+                                <option value="">-- Select Product --</option>
+                                @* @foreach (var product in Model.Products)
+                                {
+                                    <option value="@product.Id" @(product.Id == Model.SelectedProductId ? "selected" : "")>@product.Name</option>
+                                } *@
+                                @foreach (var product in Model.Products)
+                                {
+                                    bool isSelected = product.Id == Model.SelectedProductId;
+                                    <option value="@product.Id" selected="@(isSelected ? "selected" : null)">@product.Name</option>
+                                }
+                    </select>
                     </div>
                     <div class="form-group">
                         <label for="ColorID"><strong>Color</strong></label>
@@ -104,3 +116,18 @@
         </div>
     </div>
 </div>
+<script>
+        function fetchColors(productId) {
+            $.ajax({
+                url: '@Url.Page("/Sale", "GetColors")', // This URL will be mapped to a new GetColors handler
+                data: { productId: productId },
+                success: function(data) {
+                    var colorSelect = $('#ColorID');
+                    colorSelect.empty().append('<option value="">Select a color</option>');
+                    data.forEach(function(color) {
+                        colorSelect.append('<option value="' + color.ColorID + '">' + color.ColorName + '</option>');
+                    });
+                }
+            });
+        }
+    </script>
