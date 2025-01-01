@@ -65,7 +65,7 @@ namespace MyRazorApp.Pages
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                string query = "SELECT ProductCode, ProductName, AgeGroup, UnitPrice, StockLevel, StoreroomID FROM ProductView";
+                string query = "SELECT ProductCode, ProductName, AgeGroup, UnitPrice, StockLevel, StoreroomID, TotalPrice, NetPrice, Discount FROM ProductView";
                 SqlCommand cmd = new SqlCommand(query, con);
 
                 con.Open();
@@ -80,7 +80,10 @@ namespace MyRazorApp.Pages
                             AgeGroup = reader.GetString(2),
                             UnitPrice = reader.GetDecimal(3),
                             StockQuantity = reader.GetInt32(4),
-                            Storeroom = reader.GetInt32(5)
+                            Storeroom = reader.GetInt32(5),
+                            TotalPrice = reader.GetDecimal(6),
+                            NetPrice = reader.GetDecimal(7),
+                            Discount = reader.GetDecimal(8)
                         });
                     }
                 }

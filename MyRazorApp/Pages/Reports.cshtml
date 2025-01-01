@@ -1,0 +1,63 @@
+@page
+@model ReportsModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<h2>Sale Report</h2>
+<table class="table table-striped ">
+    <thead>
+        <tr>
+            <th>Product Id</th>
+            <th>Product Name</th>
+            <th>Total Sold</th>
+            <th>Total Sales Value</th>
+            <th>Discount</th>
+            <th>Net Amount</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var report in Model.saleReports) {
+            <tr>
+                <td>@report.Id</td>
+                <td>@report.ProductName</td>
+                <td>@report.TotalSold</td>
+                <td>@report.TotalSalesValue</td>
+                <td>@report.Discount</td>
+                <td>@report.NetAmount.ToString("F2")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h2>Transaction Report</h2>
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Product Code</th>
+            <th>Product Name</th>
+            <th>Color</th>
+            <th>Transaction Type</th>
+            <th>Total Quantity</th>
+            <th>Last Transaction Date</th>
+            <th>Storeroom</th>
+            <th>Stock Level After Transaction</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var report in Model.transactionReports)
+        {
+            <tr>
+                <td>@report.ProductCode</td>
+                <td>@report.ProductName</td>
+                <td>@report.ColorName</td>
+                <td>@report.TransactionType</td>
+                <td>@report.TotalQuantity</td>
+                <td>@report.LastTransactionDate.ToString("yyyy-MM-dd")</td>
+                <td>@report.StoreroomName</td>
+                <td>@report.StockLevelAfterTransaction</td>
+            </tr>
+        }
+    </tbody>
+</table>
