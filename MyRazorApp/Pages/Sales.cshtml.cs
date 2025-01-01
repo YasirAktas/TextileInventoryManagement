@@ -16,9 +16,10 @@ namespace MyRazorApp.Pages
          public List<Customer> Customers { get; set; }
         [BindProperty]
         public Customer Customer { get; set; }
-        private readonly string connectionString = "Server=127.0.0.1,1433; Database=TIMS; User ID=sa; Password=reallyStrongPwd123; Encrypt=false;";
+        private readonly string connectionString = "Data Source=Yasir;Database=TIMS;Integrated Security=True;";
          [BindProperty]
         public int SelectedProductId { get; set; }
+
 
         public void OnGet()
         {
@@ -31,7 +32,8 @@ namespace MyRazorApp.Pages
         public IActionResult OnPost()
         {
             if (Sale.Id == 0) // Only add if it's a new sale
-            {
+            {   
+                GetProductColor(Sale);
                 AddSale(Sale);
             }
 
@@ -85,6 +87,35 @@ namespace MyRazorApp.Pages
             }
 
             return sales;
+        }
+        public void GetProductColor(Sale sale)
+        {
+ 
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("FindProductColors", connection))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ProductCode", SelectedProductId);
+                    cmd.Parameters.AddWithValue("@ColorID", sale.ColorID);
+
+                    connection.Open();
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                           
+                            
+                            sale.ProductColorID = reader.GetInt32(reader.GetOrdinal("ProductColorID"));
+
+                            
+                        }
+                    }
+                }
+            }
+
         }
          private List<Customer> GetCustomersFromDatabase()
         {
@@ -202,6 +233,7 @@ namespace MyRazorApp.Pages
 
                 using (SqlCommand cmd = new SqlCommand(procedureName, con))
                 {
+                    
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
                     // Parameters for AddSale procedure
@@ -220,6 +252,7 @@ namespace MyRazorApp.Pages
         public int Id { get; set; } // Maps to SaleID
         public string ProductName { get; set; }
         public string Color {get; set;}
+        public int ColorID {get; set;}
         public int ProductColorID { get; set; } // Maps to ProductColorID
         public int Quantity { get; set; } // Maps to Quantity
         public DateTime SaleDate { get; set; } // Maps to SaleDate

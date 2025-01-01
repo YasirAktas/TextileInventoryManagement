@@ -10,7 +10,7 @@ namespace MyRazorApp.Pages
         public List<SaleReport> saleReports { get; set; }
         public List<InventoryTransactionReport> transactionReports { get; set; } = new List<InventoryTransactionReport>();
 
-        private readonly string connectionString = "Server=127.0.0.1,1433; Database=TIMS; User ID=sa; Password=reallyStrongPwd123; Encrypt=false;";
+        private readonly string connectionString = "Data Source=Yasir;Database=TIMS;Integrated Security=True;";
 
         public void OnGet()
         {
