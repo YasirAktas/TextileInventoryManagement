@@ -74,7 +74,7 @@ namespace MyRazorApp.Pages
                     {
                         reports.Add(new InventoryTransactionReport
                         {
-                            ProductCode = reader.GetString(0),
+                            ProductCode = reader.GetInt32(0),
                             ProductName = reader.GetString(1),
                             ColorName = reader.GetString(2),
                             TransactionType = reader.GetString(3),
@@ -104,7 +104,7 @@ namespace MyRazorApp.Pages
     }
     public class InventoryTransactionReport
         {
-            public string ProductCode { get; set; }
+            public int ProductCode { get; set; }
             public string ProductName { get; set; }
             public string ColorName { get; set; }
             public string TransactionType { get; set; }
