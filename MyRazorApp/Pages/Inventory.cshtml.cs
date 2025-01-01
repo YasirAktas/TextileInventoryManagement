@@ -9,7 +9,7 @@ namespace MyRazorApp.Pages
     public class InventoryModel : PageModel
     {
         private readonly ILogger<InventoryModel> _logger;
-        private readonly string _connectionString = "Server=127.0.0.1,1433; Database=TIMS; User ID=sa; Password=reallyStrongPwd123; Encrypt=false;";
+        private readonly string _connectionString = "Data Source=Yasir;Database=TIMS;Integrated Security=True;";
 
         // Properties to hold the list of products in each storeroom
         public List<StoreroomProduct> Storeroom1Products { get; private set; }
