@@ -16,7 +16,7 @@ namespace MyRazorApp.Pages
          public List<Customer> Customers { get; set; }
         [BindProperty]
         public Customer Customer { get; set; }
-        private readonly string connectionString = "Data Source=Yasir;Database=TIMS;Integrated Security=True;";
+        private readonly string connectionString = "Server=127.0.0.1,1433; Database=TIMS; User ID=sa; Password=reallyStrongPwd123; Encrypt=false;";
          [BindProperty]
         public int SelectedProductId { get; set; }
 
@@ -90,30 +90,27 @@ namespace MyRazorApp.Pages
         }
         public void GetProductColor(Sale sale)
         {
- 
-
+            
+            string query = "SELECT pc.ProductColorID FROM Product_Color pc WHERE pc.ProductCode = @ProductCode AND ColorID = @ColorID; ";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                using (SqlCommand cmd = new SqlCommand("FindProductColors", connection))
-                {
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                     SqlCommand cmd = new SqlCommand(query, connection);
                     cmd.Parameters.AddWithValue("@ProductCode", SelectedProductId);
                     cmd.Parameters.AddWithValue("@ColorID", sale.ColorID);
+                    
 
                     connection.Open();
-
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.Read())
                         {
-                           
                             
                             sale.ProductColorID = reader.GetInt32(reader.GetOrdinal("ProductColorID"));
-
                             
                         }
                     }
-                }
+
+                
             }
 
         }
