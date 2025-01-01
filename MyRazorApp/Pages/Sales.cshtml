@@ -83,7 +83,7 @@
                     </div>
                     <div class="form-group">
                         <label for="ColorID"><strong>Color</strong></label>
-                        <select id="colorSelect" class="form-select" name ="sale.ColorID"disabled>
+                        <select id="colorSelect" class="form-select" name="Sale.ColorID" disabled>
                             <option value="">-- Select Color --</option>
                         </select>
                     </div>
@@ -117,6 +117,7 @@ colorSelect.disabled = false;
         const productSelect = document.getElementById("productSelect");
         const colorSelect = document.getElementById("colorSelect");
 
+        
         productSelect.addEventListener("change", function () {
             const productId = this.value;
             console.log(productId);
@@ -132,7 +133,7 @@ colorSelect.disabled = false;
 
                     data.forEach(color => {
                         const option = document.createElement("option");
-                        option.value = color.colorID;
+                        option.value = color.colorId;
                         option.textContent = color.colorName;
                         colorSelect.appendChild(option);
                     });
