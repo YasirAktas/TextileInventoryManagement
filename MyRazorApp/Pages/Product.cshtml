@@ -59,7 +59,7 @@
                      data-id="@product.Id">Add Color</button>
 
                      <!-- Remove Quantity Button -->
-                    <input type="hidden" name="ProductId" value="@product.Id"/>
+                    <input type="hidden" name="ProductId" id="ProductId" value="@product.Id"/>
                     <button class="btn btn-warning" data-toggle="modal" data-target="#removeQuantityModal"
                     data-id="@product.Id">Remove Quantity</button>
 
@@ -175,8 +175,7 @@
             <form method="post">
                 <div class="modal-body">
                     <!-- Hidden field for Product ID -->
-                    @* <input type="hidden" id="RemoveProductCode" name="Product.Id" value="@product.id" /> *@
-                    @* <input type="hidden" id="productSelect" name="Product.Id"> *@
+                    <input type="hidden" id="RemoveProductCode" name="Product.Id"/>
                     <!-- Dropdown to select color -->
                     <div class="form-group">
                         <label for="RemoveColorID"><strong>Color</strong></label>
@@ -242,11 +241,11 @@
                     // Populate the color dropdown with available colors
 
                     data.forEach(color => {
-                        console.log(color);
+                        
                         const option = document.createElement("option");
-                        option.value = color.colorId; // Set the colorId as the option value
-                        option.textContent = color.colorName; // Set the colorName as the option text
-                        colorSelect.appendChild(option); // Add the option to the dropdown
+                        option.value = color.colorId;
+                        option.textContent = color.colorName;
+                        colorSelect.appendChild(option);
                     });
 
                     colorSelect.disabled = false; // Enable the color dropdown
