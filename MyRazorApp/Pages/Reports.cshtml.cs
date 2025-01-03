@@ -10,7 +10,7 @@ namespace MyRazorApp.Pages
         public List<SaleReport> saleReports { get; set; }
         public List<InventoryTransactionReport> transactionReports { get; set; } = new List<InventoryTransactionReport>();
 
-        private readonly string connectionString = "Data Source=Yasir;Database=TIMS;Integrated Security=True;";
+        private readonly string connectionString = "Server=127.0.0.1,1433; Database=TIMS; User ID=sa; Password=reallyStrongPwd123; Encrypt=false;";
 
         public void OnGet()
         {
@@ -61,8 +61,7 @@ namespace MyRazorApp.Pages
                         TransactionType,
                         TotalQuantity,
                         LastTransactionDate,
-                        StoreroomName,
-                        StockLevelAfterTransaction
+                        StoreroomName
                     FROM InventoryTransactionReport";
 
                 SqlCommand cmd = new SqlCommand(query, con);
@@ -81,7 +80,6 @@ namespace MyRazorApp.Pages
                             TotalQuantity = reader.GetInt32(4),
                             LastTransactionDate = reader.GetDateTime(5),
                             StoreroomName = reader.GetString(6),
-                            StockLevelAfterTransaction = reader.GetInt32(7),
                         });
                     }
                 }

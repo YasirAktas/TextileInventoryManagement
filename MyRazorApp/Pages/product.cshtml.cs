@@ -18,7 +18,7 @@ namespace MyRazorApp.Pages
         public ProductColor productColor {get; set;} 
         public Color color {get; set; }
 
-        private readonly string connectionString = "Data Source=Yasir;Database=TIMS;Integrated Security=True;";
+        private readonly string connectionString = "Server=127.0.0.1,1433; Database=TIMS; User ID=sa; Password=reallyStrongPwd123; Encrypt=false;";
 
         public void OnGet()
         {
@@ -33,6 +33,15 @@ namespace MyRazorApp.Pages
                 var productId = int.Parse(Request.Form["ProductId"]);
                 DeleteProduct(productId);
             }
+            else if (Request.Form["action"] == "removeQuantity")
+            {
+                // Extract data for removing a product color quantity
+                int productCode = int.Parse(Request.Form["Product.Id"]);
+                int colorID = int.Parse(Request.Form["productColor.ColorID"]);
+                int quantityToRemove = int.Parse(Request.Form["productColor.Quantity"]);
+
+                RemoveProductColorQuantity(productCode, colorID, quantityToRemove);
+            }
             else if (Product.Id > 0)
             {
                 // Extract data for adding a product color
@@ -44,6 +53,8 @@ namespace MyRazorApp.Pages
 
                 UpdateProduct(productCode, colorID, quantity, pricePerUnit);
             }
+            
+
             else
             {
                 AddProduct(Product);
@@ -189,6 +200,66 @@ namespace MyRazorApp.Pages
                 }
             }
         }
+        private void RemoveProductColorQuantity(int productCode, int colorID, int quantityToRemove)
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string procedureName = "RemoveProductColorQuantity";
+
+                using (SqlCommand cmd = new SqlCommand(procedureName, con))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@ProductCode", productCode);
+                    cmd.Parameters.AddWithValue("@ColorID", colorID);
+                    cmd.Parameters.AddWithValue("@QuantityToRemove", quantityToRemove);
+
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+        public JsonResult OnGetProductColors(int productId)
+        {
+            var colors = getColorsByProductId(productId); // Fetch colors based on productId
+            return new JsonResult(colors.Select(color => new
+            {
+                ColorId = color.ColorID,     // Return the ColorID
+                ColorName = color.ColorName  // Return the ColorName
+            }));
+        }
+
+        private List<Color> getColorsByProductId(int productId)
+        {
+            var colors = new List<Color>();
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = "SELECT C.ColorID, C.ColorName " +
+                            "FROM Color C " +
+                            "INNER JOIN Product_Color Pc ON C.ColorID = Pc.ColorID " +
+                            "WHERE Pc.ProductCode = @ProductId"; // Ensure the correct ProductCode is used
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@ProductId", productId);
+
+                con.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        colors.Add(new Color
+                        {
+                            ColorID = reader.GetInt32(0),
+                            ColorName = reader.GetString(1),
+                        });
+                    }
+                }
+            }
+
+            return colors; // Return the list of colors for the product
+        }
+
+
 
     }
 
