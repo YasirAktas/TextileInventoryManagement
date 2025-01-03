@@ -16,7 +16,7 @@ namespace MyRazorApp.Pages
          public List<Customer> Customers { get; set; }
         [BindProperty]
         public Customer Customer { get; set; }
-        private readonly string connectionString = "Data Source=Yasir;Database=TIMS;Integrated Security=True;";
+        private readonly string connectionString = "Server=127.0.0.1,1433; Database=TIMS; User ID=sa; Password=reallyStrongPwd123; Encrypt=false;";
          [BindProperty]
         public int SelectedProductId { get; set; }
 
