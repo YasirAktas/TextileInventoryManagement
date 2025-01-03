@@ -67,24 +67,29 @@ namespace MyRazorApp.Pages
             return customers;
         }
 
-        private void AddCustomer(Customer customer)
+       private void AddCustomer(Customer customer)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                string query = "INSERT INTO Customer (CustomerName, PhoneNumber, Email, Address) VALUES (@CustomerName, @PhoneNumber, @Email, @Address)";
+                string procedureName = "AddCustomer"; // Name of the stored procedure
 
-                using (SqlCommand cmd = new SqlCommand(query, con))
+                using (SqlCommand cmd = new SqlCommand(procedureName, con))
                 {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    // Add parameters for the stored procedure
                     cmd.Parameters.AddWithValue("@CustomerName", customer.CustomerName);
                     cmd.Parameters.AddWithValue("@PhoneNumber", customer.PhoneNumber);
                     cmd.Parameters.AddWithValue("@Email", (object)customer.Email ?? DBNull.Value);
                     cmd.Parameters.AddWithValue("@Address", (object)customer.Address ?? DBNull.Value);
 
+                    // Open the connection and execute the procedure
                     con.Open();
                     cmd.ExecuteNonQuery();
                 }
             }
         }
+
 
         private void DeleteCustomer(int customerId)
         {
@@ -102,6 +107,8 @@ namespace MyRazorApp.Pages
             }
         }
     }
+
+
 
     public class Customer
     {

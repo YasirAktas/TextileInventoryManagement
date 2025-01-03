@@ -3,9 +3,22 @@
 @{
     ViewData["Title"] = "Inventory Management";
 }
+<!-- Bootstrap CSS -->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
 
 <div class="container">
     <h1 class="text-center">Textile Inventory Management System</h1>
+<div>
+    <button class="btn btn-primary" data-toggle="modal" data-target="#addStoreroomModal">Add New Storeroom</button>
+</div>
+
     <div class="row mt-4">
         <!-- Storeroom 1 Table -->
         <div class="col-md-4">
@@ -139,4 +152,32 @@
             </tbody>
         </table>
     </div>
+    
 </div>
+
+<!-- Modal for Add Sale -->
+<div class="modal fade" id="addStoreroomModal" tabindex="-1" role="dialog" aria-labelledby="addStoreroomModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="addStoreroomModalLabel">Add New Storeroom</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="Name"><strong>Storeroom</strong></label>
+                        <input type="String" class="form-control" id="Quantity" name="StoreroomName" placeholder="Enter Name" required />
+                    </div>                   
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Storeroom</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

@@ -110,7 +110,28 @@ namespace MyRazorApp.Pages
 
             return results;
         }
+        private void AddStoreroom(Storeroom storeroom)
+    {
+        using (SqlConnection con = new SqlConnection(_connectionString))
+        {
+            string procedureName = "AddStoreroom";  // Stored procedure name
+
+            using (SqlCommand cmd = new SqlCommand(procedureName, con))
+            {
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                // Add parameter for StoreroomName
+                cmd.Parameters.AddWithValue("@StoreroomName", storeroom.Name);
+
+                con.Open();
+                cmd.ExecuteNonQuery(); // Execute the stored procedure
+            }
+        }
     }
+    }
+
+    
+
 
     public class ProductColorView
     {
@@ -124,5 +145,8 @@ namespace MyRazorApp.Pages
     {
         public string Name { get; set; }
         public int StockQuantity { get; set; }
+    }
+    public class Storeroom{
+        public string Name {get; set; }
     }
 }
